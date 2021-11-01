@@ -23,3 +23,6 @@ conda create -n ac jupyter pandas
 ```
 
 Ativa-se o ambiente com: `conda activate ac` para trabalhar nesse ambiente e inicia-se o Jupyter Lab com `jupyter lab` para trabalhar no repo
+
+## Extra
+- [CheatSheet de comandos conda](https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html)
