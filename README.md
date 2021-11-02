@@ -2,8 +2,6 @@
 
 Notebook fica neste repositório e usa-se git como controlo de versões
 
-https://github.com/diogohalmeida/FEUP-AC-PROJ/blob/main/Merging.ipynb 👀
-
 ## Instalação ambiente conda/jupyter
 
 Usar [Conda](https://docs.conda.io/en/latest/#) para package management e para Jupyter. 
