@@ -24,3 +24,6 @@ Ativa-se o ambiente com: `conda activate ac` para trabalhar nesse ambiente e ini
 
 ## Extra
 - [CheatSheet de comandos conda](https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html)
+- Run notebook via cli: `jupyter nbconvert --to notebook --inplace --execute initial.ipynb`
+- Export conda env: `conda env export > environment.yml`
+- Create env from env file: `conda env create -f environment.yml`
