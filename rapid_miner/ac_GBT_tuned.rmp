@@ -127,11 +127,11 @@
         </process>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.10.001" expanded="true" height="68" name="Retrieve" width="90" x="45" y="238">
-        <parameter key="repository_entry" value="parameters/DT_params"/>
+        <parameter key="repository_entry" value="parameters/GBT_params"/>
       </operator>
       <operator activated="true" class="set_parameters" compatibility="9.10.001" expanded="true" height="82" name="Set Parameters" width="90" x="179" y="238">
         <list key="name_map">
-          <parameter key="Decision Tree" value="Decision Tree"/>
+          <parameter key="Gradient Boosted Trees" value="Gradient Boosted Trees"/>
         </list>
       </operator>
       <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Retrieve Train Data" width="90" x="45" y="34">
@@ -248,16 +248,26 @@
           <portSpacing port="sink_out 2" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.10.001" expanded="true" height="103" name="Decision Tree" width="90" x="179" y="34">
-        <parameter key="criterion" value="gain_ratio"/>
-        <parameter key="maximal_depth" value="10"/>
-        <parameter key="apply_pruning" value="true"/>
-        <parameter key="confidence" value="0.1"/>
-        <parameter key="apply_prepruning" value="true"/>
-        <parameter key="minimal_gain" value="0.01"/>
-        <parameter key="minimal_leaf_size" value="2"/>
-        <parameter key="minimal_size_for_split" value="4"/>
-        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      <operator activated="true" class="h2o:gradient_boosted_trees" compatibility="9.10.001" expanded="true" height="103" name="Gradient Boosted Trees" width="90" x="179" y="34">
+        <parameter key="number_of_trees" value="50"/>
+        <parameter key="reproducible" value="false"/>
+        <parameter key="maximum_number_of_threads" value="4"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="maximal_depth" value="5"/>
+        <parameter key="min_rows" value="10.0"/>
+        <parameter key="min_split_improvement" value="1.0E-5"/>
+        <parameter key="number_of_bins" value="20"/>
+        <parameter key="learning_rate" value="0.1009"/>
+        <parameter key="sample_rate" value="1.0"/>
+        <parameter key="distribution" value="AUTO"/>
+        <parameter key="early_stopping" value="false"/>
+        <parameter key="stopping_rounds" value="1"/>
+        <parameter key="stopping_metric" value="AUTO"/>
+        <parameter key="stopping_tolerance" value="0.001"/>
+        <list key="monotone_constraints"/>
+        <parameter key="max_runtime_seconds" value="0"/>
+        <list key="expert_parameters"/>
       </operator>
       <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="313" y="136">
         <list key="application_parameters"/>
@@ -288,7 +298,7 @@
             <parameter key="to_attribute" value=""/>
           </operator>
           <operator activated="true" class="write_csv" compatibility="9.10.001" expanded="true" height="82" name="Write CSV" width="90" x="581" y="34">
-            <parameter key="csv_file" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/submissions/DT.csv"/>
+            <parameter key="csv_file" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/submissions/GBT.csv"/>
             <parameter key="column_separator" value=","/>
             <parameter key="write_attribute_names" value="true"/>
             <parameter key="quote_nominal_values" value="false"/>
@@ -309,8 +319,8 @@
       </operator>
       <connect from_op="Retrieve Test Data" from_port="out 1" to_op="Apply Model Test" to_port="unlabelled data"/>
       <connect from_op="Retrieve" from_port="output" to_op="Set Parameters" to_port="parameter set"/>
-      <connect from_op="Retrieve Train Data" from_port="out 1" to_op="Decision Tree" to_port="training set"/>
-      <connect from_op="Decision Tree" from_port="model" to_op="Apply Model Test" to_port="model"/>
+      <connect from_op="Retrieve Train Data" from_port="out 1" to_op="Gradient Boosted Trees" to_port="training set"/>
+      <connect from_op="Gradient Boosted Trees" from_port="model" to_op="Apply Model Test" to_port="model"/>
       <connect from_op="Apply Model Test" from_port="labelled data" to_op="Save Submission" to_port="in 1"/>
       <connect from_op="Apply Model Test" from_port="model" to_port="result 2"/>
       <connect from_op="Save Submission" from_port="out 1" to_port="result 1"/>
