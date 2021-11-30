@@ -15,7 +15,7 @@
       <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Retrieve Train Data" width="90" x="45" y="34">
         <process expanded="true">
           <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Read Train" width="90" x="45" y="34">
-            <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\train_data.csv"/>
+            <parameter key="csv_file" value="C:\Users\fmna\Documents\AC\train_data.csv"/>
             <parameter key="column_separators" value=","/>
             <parameter key="trim_lines" value="false"/>
             <parameter key="use_quotes" value="false"/>
@@ -38,43 +38,46 @@
             <parameter key="read_all_values_as_polynominal" value="false"/>
             <list key="data_set_meta_data_information">
               <parameter key="0" value="loan_id.true.integer.attribute"/>
-              <parameter key="1" value="amount_loan.true.integer.attribute"/>
-              <parameter key="2" value="duration.true.integer.attribute"/>
-              <parameter key="3" value="payments.true.integer.attribute"/>
-              <parameter key="4" value="status.true.binominal.attribute"/>
-              <parameter key="5" value="age_clt.true.integer.attribute"/>
-              <parameter key="6" value="gender_clt.true.polynominal.attribute"/>
-              <parameter key="7" value="frequency.true.polynominal.attribute"/>
-              <parameter key="8" value="age_acc.true.integer.attribute"/>
-              <parameter key="9" value="region.true.polynominal.attribute"/>
-              <parameter key="10" value="no\. of inhabitants.true.integer.attribute"/>
-              <parameter key="11" value="average salary.true.integer.attribute"/>
-              <parameter key="12" value="unemploymant rate '95.true.real.attribute"/>
-              <parameter key="13" value="unemploymant rate '96.true.real.attribute"/>
-              <parameter key="14" value="no\. of enterpreneurs per 1000 inhabitants.true.integer.attribute"/>
-              <parameter key="15" value="no\. of commited crimes '95.true.integer.attribute"/>
-              <parameter key="16" value="no\. of commited crimes '96.true.integer.attribute"/>
-              <parameter key="17" value="type_trans_count_withdrawal.true.integer.attribute"/>
-              <parameter key="18" value="type_trans_count_credit.true.integer.attribute"/>
-              <parameter key="19" value="type_trans_mean_withdrawal.true.real.attribute"/>
-              <parameter key="20" value="type_trans_mean_credit.true.real.attribute"/>
-              <parameter key="21" value="type_trans_cov_withdrawal.true.real.attribute"/>
-              <parameter key="22" value="type_trans_cov_credit.true.real.attribute"/>
-              <parameter key="23" value="operation_count.true.integer.attribute"/>
-              <parameter key="24" value="amount_trans_mean.true.real.attribute"/>
-              <parameter key="25" value="amount_trans_min.true.real.attribute"/>
-              <parameter key="26" value="amount_trans_max.true.real.attribute"/>
-              <parameter key="27" value="amount_trans_std.true.real.attribute"/>
-              <parameter key="28" value="amount_trans_last.true.real.attribute"/>
-              <parameter key="29" value="amount_trans_abs_min.true.real.attribute"/>
-              <parameter key="30" value="amount_trans_rangev.true.real.attribute"/>
-              <parameter key="31" value="balance_mean.true.real.attribute"/>
-              <parameter key="32" value="balance_min.true.real.attribute"/>
-              <parameter key="33" value="balance_max.true.real.attribute"/>
-              <parameter key="34" value="balance_std.true.real.attribute"/>
-              <parameter key="35" value="balance_last.true.real.attribute"/>
-              <parameter key="36" value="balance_abs_min.true.real.attribute"/>
-              <parameter key="37" value="balance_rangev.true.real.attribute"/>
+              <parameter key="1" value="date_loan.true.integer.attribute"/>
+              <parameter key="2" value="amount_loan.true.integer.attribute"/>
+              <parameter key="3" value="duration.true.integer.attribute"/>
+              <parameter key="4" value="payments.true.integer.attribute"/>
+              <parameter key="5" value="status.true.polynominal.attribute"/>
+              <parameter key="6" value="age_clt.true.integer.attribute"/>
+              <parameter key="7" value="gender_clt.true.polynominal.attribute"/>
+              <parameter key="8" value="frequency.true.polynominal.attribute"/>
+              <parameter key="9" value="age_acc.true.integer.attribute"/>
+              <parameter key="10" value="region.true.polynominal.attribute"/>
+              <parameter key="11" value="no\. of inhabitants.true.integer.attribute"/>
+              <parameter key="12" value="average salary.true.integer.attribute"/>
+              <parameter key="13" value="unemploymant rate '95.true.real.attribute"/>
+              <parameter key="14" value="unemploymant rate '96.true.real.attribute"/>
+              <parameter key="15" value="no\. of enterpreneurs per 1000 inhabitants.true.integer.attribute"/>
+              <parameter key="16" value="no\. of commited crimes '95.true.integer.attribute"/>
+              <parameter key="17" value="no\. of commited crimes '96.true.integer.attribute"/>
+              <parameter key="18" value="date_trans_max.true.integer.attribute"/>
+              <parameter key="19" value="date_trans_min.true.integer.attribute"/>
+              <parameter key="20" value="type_trans_count_withdrawal.true.integer.attribute"/>
+              <parameter key="21" value="type_trans_count_credit.true.integer.attribute"/>
+              <parameter key="22" value="type_trans_mean_withdrawal.true.real.attribute"/>
+              <parameter key="23" value="type_trans_mean_credit.true.real.attribute"/>
+              <parameter key="24" value="type_trans_cov_withdrawal.true.real.attribute"/>
+              <parameter key="25" value="type_trans_cov_credit.true.real.attribute"/>
+              <parameter key="26" value="operation_count.true.integer.attribute"/>
+              <parameter key="27" value="amount_trans_mean.true.real.attribute"/>
+              <parameter key="28" value="amount_trans_min.true.real.attribute"/>
+              <parameter key="29" value="amount_trans_max.true.real.attribute"/>
+              <parameter key="30" value="amount_trans_std.true.real.attribute"/>
+              <parameter key="31" value="amount_trans_last.true.real.attribute"/>
+              <parameter key="32" value="amount_trans_abs_min.true.real.attribute"/>
+              <parameter key="33" value="amount_trans_rangev.true.real.attribute"/>
+              <parameter key="34" value="balance_mean.true.real.attribute"/>
+              <parameter key="35" value="balance_min.true.real.attribute"/>
+              <parameter key="36" value="balance_max.true.real.attribute"/>
+              <parameter key="37" value="balance_std.true.real.attribute"/>
+              <parameter key="38" value="balance_last.true.real.attribute"/>
+              <parameter key="39" value="balance_abs_min.true.real.attribute"/>
+              <parameter key="40" value="balance_rangev.true.real.attribute"/>
             </list>
             <parameter key="read_not_matching_values_as_missings" value="false"/>
           </operator>
