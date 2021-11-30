@@ -249,7 +249,7 @@
         </process>
       </operator>
       <operator activated="true" class="h2o:gradient_boosted_trees" compatibility="9.10.001" expanded="true" height="103" name="Gradient Boosted Trees" width="90" x="179" y="34">
-        <parameter key="number_of_trees" value="50"/>
+        <parameter key="number_of_trees" value="37"/>
         <parameter key="reproducible" value="false"/>
         <parameter key="maximum_number_of_threads" value="4"/>
         <parameter key="use_local_random_seed" value="false"/>
@@ -257,8 +257,8 @@
         <parameter key="maximal_depth" value="5"/>
         <parameter key="min_rows" value="10.0"/>
         <parameter key="min_split_improvement" value="1.0E-5"/>
-        <parameter key="number_of_bins" value="20"/>
-        <parameter key="learning_rate" value="0.1009"/>
+        <parameter key="number_of_bins" value="802"/>
+        <parameter key="learning_rate" value="0.2008"/>
         <parameter key="sample_rate" value="1.0"/>
         <parameter key="distribution" value="AUTO"/>
         <parameter key="early_stopping" value="false"/>

@@ -128,8 +128,11 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="34">
         <list key="parameters">
-          <parameter key="Random Forest.number_of_trees" value="[1.0;100.0;10;linear]"/>
-          <parameter key="Random Forest.maximal_depth" value="[-1.0;100.0;10;linear]"/>
+          <parameter key="Random Forest.number_of_trees" value="[1.0;150.0;10;linear]"/>
+          <parameter key="Random Forest.maximal_depth" value="[0.0;30.0;10;linear]"/>
+          <parameter key="Random Forest.criterion" value="gain_ratio,information_gain,gini_index,accuracy"/>
+          <parameter key="Random Forest.apply_prepruning" value="true,false"/>
+          <parameter key="Random Forest.apply_pruning" value="true,false"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>

@@ -166,7 +166,7 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="179" y="34">
+              <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="246" y="34">
                 <parameter key="kernel_type" value="dot"/>
                 <parameter key="kernel_gamma" value="1.0"/>
                 <parameter key="kernel_sigma1" value="1.0"/>

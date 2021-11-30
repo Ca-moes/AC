@@ -128,8 +128,9 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="34">
         <list key="parameters">
-          <parameter key="Gradient Boosted Trees.distribution" value="bernoulli,multinomial,AUTO"/>
-          <parameter key="Gradient Boosted Trees.number_of_trees" value="[1.0;100000.0;10;linear]"/>
+          <parameter key="Gradient Boosted Trees.number_of_trees" value="[1.0;100.0;10;quadratic]"/>
+          <parameter key="Gradient Boosted Trees.number_of_bins" value="[10.0;1000.0;10;linear]"/>
+          <parameter key="Gradient Boosted Trees.learning_rate" value="[0.001;1.0;10;linear]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -141,7 +142,7 @@
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="10"/>
-            <parameter key="sampling_type" value="stratified sampling"/>
+            <parameter key="sampling_type" value="automatic"/>
             <parameter key="use_local_random_seed" value="false"/>
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
