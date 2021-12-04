@@ -12,7 +12,7 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Train Data" width="90" x="45" y="34">
+      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Train Data" width="90" x="45" y="238">
         <parameter key="process_location" value="../read_train_data"/>
         <parameter key="use_input" value="true"/>
         <parameter key="store_output" value="false"/>
@@ -21,11 +21,11 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="34">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="238">
         <list key="parameters">
-          <parameter key="Decision Tree.minimal_leaf_size" value="1,2,4,6"/>
-          <parameter key="Decision Tree.criterion" value="gain_ratio,information_gain,gini_index,accuracy"/>
-          <parameter key="Decision Tree.minimal_size_for_split" value="2,4,6,8"/>
+          <parameter key="Decision Tree.confidence" value="[0.001;0.3;10;linear]"/>
+          <parameter key="Decision Tree.apply_pruning" value="true,false"/>
+          <parameter key="Decision Tree.apply_prepruning" value="true,false"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -33,7 +33,7 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="380" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="246" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="10"/>
@@ -42,18 +42,30 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.10.001" expanded="true" height="103" name="Decision Tree" width="90" x="179" y="34">
+              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="112" y="34">
+                <parameter key="number_of_neighbours" value="5"/>
+                <parameter key="normalize" value="true"/>
+                <parameter key="equalize_classes" value="true"/>
+                <parameter key="upsampling_size" value="1000"/>
+                <parameter key="auto_detect_minority_class" value="true"/>
+                <parameter key="round_integers" value="true"/>
+                <parameter key="nominal_change_rate" value="0.5"/>
+                <parameter key="use_local_random_seed" value="false"/>
+                <parameter key="local_random_seed" value="1992"/>
+              </operator>
+              <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.10.001" expanded="true" height="103" name="Decision Tree" width="90" x="246" y="34">
                 <parameter key="criterion" value="gain_ratio"/>
                 <parameter key="maximal_depth" value="10"/>
                 <parameter key="apply_pruning" value="true"/>
                 <parameter key="confidence" value="0.1"/>
                 <parameter key="apply_prepruning" value="true"/>
                 <parameter key="minimal_gain" value="0.01"/>
-                <parameter key="minimal_leaf_size" value="2"/>
-                <parameter key="minimal_size_for_split" value="4"/>
+                <parameter key="minimal_leaf_size" value="1"/>
+                <parameter key="minimal_size_for_split" value="2"/>
                 <parameter key="number_of_prepruning_alternatives" value="3"/>
               </operator>
-              <connect from_port="training set" to_op="Decision Tree" to_port="training set"/>
+              <connect from_port="training set" to_op="SMOTE Upsampling" to_port="exa"/>
+              <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Decision Tree" to_port="training set"/>
               <connect from_op="Decision Tree" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
               <portSpacing port="sink_model" spacing="0"/>
@@ -65,13 +77,39 @@
                 <list key="application_parameters"/>
                 <parameter key="create_view" value="false"/>
               </operator>
-              <operator activated="true" class="performance" compatibility="9.10.001" expanded="true" height="82" name="Performance" origin="GENERATED_COMMUNITY" width="90" x="246" y="34">
+              <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="246" y="34">
+                <parameter key="manually_set_positive_class" value="true"/>
+                <parameter key="positive_class" value="No"/>
+                <parameter key="main_criterion" value="AUC"/>
+                <parameter key="accuracy" value="true"/>
+                <parameter key="classification_error" value="false"/>
+                <parameter key="kappa" value="false"/>
+                <parameter key="AUC (optimistic)" value="false"/>
+                <parameter key="AUC" value="true"/>
+                <parameter key="AUC (pessimistic)" value="false"/>
+                <parameter key="precision" value="true"/>
+                <parameter key="recall" value="true"/>
+                <parameter key="lift" value="false"/>
+                <parameter key="fallout" value="false"/>
+                <parameter key="f_measure" value="true"/>
+                <parameter key="false_positive" value="false"/>
+                <parameter key="false_negative" value="false"/>
+                <parameter key="true_positive" value="false"/>
+                <parameter key="true_negative" value="false"/>
+                <parameter key="sensitivity" value="false"/>
+                <parameter key="specificity" value="false"/>
+                <parameter key="youden" value="false"/>
+                <parameter key="positive_predictive_value" value="false"/>
+                <parameter key="negative_predictive_value" value="false"/>
+                <parameter key="psep" value="false"/>
+                <parameter key="skip_undefined_labels" value="true"/>
                 <parameter key="use_example_weights" value="true"/>
               </operator>
               <connect from_port="model" to_op="Apply Model" to_port="model"/>
               <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
               <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
               <connect from_op="Performance" from_port="performance" to_port="performance 1"/>
+              <connect from_op="Performance" from_port="example set" to_port="test set results"/>
               <portSpacing port="source_model" spacing="0"/>
               <portSpacing port="source_test set" spacing="0"/>
               <portSpacing port="source_through 1" spacing="0"/>
@@ -81,29 +119,62 @@
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="514" y="136">
+            <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/DT_cross.log"/>
+            <list key="log">
+              <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
+              <parameter key="Execution Time" value="operator.Cross Validation.value.time"/>
+              <parameter key="criterion" value="operator.Decision Tree.parameter.criterion"/>
+              <parameter key="max_depth" value="operator.Decision Tree.parameter.maximal_depth"/>
+              <parameter key="confidence" value="operator.Decision Tree.parameter.confidence"/>
+              <parameter key="minimal_gain" value="operator.Decision Tree.parameter.minimal_gain"/>
+              <parameter key="apply_pruning" value="operator.Decision Tree.parameter.apply_pruning"/>
+              <parameter key="apply_prepruning" value="operator.Decision Tree.parameter.apply_prepruning"/>
+              <parameter key="AUC" value="operator.Cross Validation.value.performance main criterion"/>
+            </list>
+            <parameter key="sorting_type" value="none"/>
+            <parameter key="sorting_dimension" value="Iteration"/>
+            <parameter key="sorting_k" value="100"/>
+            <parameter key="persistent" value="false"/>
+          </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
-          <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
+          <connect from_op="Cross Validation" from_port="test result set" to_port="output 1"/>
+          <connect from_op="Cross Validation" from_port="performance 1" to_op="Cross Validation Log" to_port="through 1"/>
+          <connect from_op="Cross Validation Log" from_port="through 1" to_port="performance"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_output 1" spacing="0"/>
+          <portSpacing port="sink_output 2" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="514" y="136">
+      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="715" y="136">
         <parameter key="repository_entry" value="../parameters/DT_params"/>
+      </operator>
+      <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="514" y="391">
+        <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/DT_optimize.log"/>
+        <list key="log">
+          <parameter key="Execution Time (ms)" value="operator.Optimize Parameters (Grid).value.time"/>
+        </list>
+        <parameter key="sorting_type" value="none"/>
+        <parameter key="sorting_k" value="100"/>
+        <parameter key="persistent" value="false"/>
       </operator>
       <connect from_op="Read Train Data" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_port="result 2"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store" to_port="input"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="output 1" to_port="result 4"/>
       <connect from_op="Store" from_port="through" to_port="result 3"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
+      <portSpacing port="sink_result 5" spacing="0"/>
+      <description align="left" color="yellow" colored="false" height="334" resized="true" width="244" x="170" y="87">Optimize parameters:&lt;br&gt;- criterion: todos menosleast_square&lt;br&gt;- max_depth: 0-30&lt;br&gt;- apply_pruning: true/false&lt;br&gt;- confidence: 0.001-0.6&lt;br&gt;- apply pre-pruning: true/false&lt;br&gt;- minimal gain: 0-0.3&lt;br&gt;</description>
     </process>
   </operator>
 </process>
