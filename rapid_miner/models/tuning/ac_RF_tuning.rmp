@@ -21,10 +21,10 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="34">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="Random Forest.number_of_trees" value="[1.0;250.0;10;linear]"/>
-          <parameter key="Random Forest.criterion" value="gini_index,gain_ratio,information_gain,accuracy"/>
+          <parameter key="Random Forest.apply_pruning" value="true"/>
+          <parameter key="Random Forest.confidence" value="[0.001;0.5;10;logarithmic]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -32,7 +32,7 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="179" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="380" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="10"/>
@@ -54,11 +54,11 @@
               </operator>
               <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="246" y="34">
                 <parameter key="number_of_trees" value="100"/>
-                <parameter key="criterion" value="gini_index"/>
+                <parameter key="criterion" value="gain_ratio"/>
                 <parameter key="maximal_depth" value="50"/>
                 <parameter key="apply_pruning" value="false"/>
                 <parameter key="confidence" value="0.1"/>
-                <parameter key="apply_prepruning" value="false"/>
+                <parameter key="apply_prepruning" value="true"/>
                 <parameter key="minimal_gain" value="0.01"/>
                 <parameter key="minimal_leaf_size" value="2"/>
                 <parameter key="minimal_size_for_split" value="4"/>
@@ -125,9 +125,30 @@
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="648" y="136">
+            <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/RF_cross.log"/>
+            <list key="log">
+              <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
+              <parameter key="Execution Time" value="operator.Cross Validation.value.time"/>
+              <parameter key="n_trees" value="operator.Random Forest.parameter.number_of_trees"/>
+              <parameter key="max_depth" value="operator.Random Forest.parameter.maximal_depth"/>
+              <parameter key="criterion" value="operator.Random Forest.parameter.criterion"/>
+              <parameter key="pruning" value="operator.Random Forest.parameter.apply_pruning"/>
+              <parameter key="confidence" value="operator.Random Forest.parameter.confidence"/>
+              <parameter key="pre prunning" value="operator.Random Forest.parameter.apply_prepruning"/>
+              <parameter key="min gain" value="operator.Random Forest.parameter.minimal_gain"/>
+              <parameter key="min leaf size" value="operator.Random Forest.parameter.minimal_leaf_size"/>
+              <parameter key="AUC" value="operator.Cross Validation.value.performance main criterion"/>
+            </list>
+            <parameter key="sorting_type" value="none"/>
+            <parameter key="sorting_dimension" value="Iteration"/>
+            <parameter key="sorting_k" value="100"/>
+            <parameter key="persistent" value="false"/>
+          </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
-          <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
+          <connect from_op="Cross Validation" from_port="performance 1" to_op="Cross Validation Log" to_port="through 1"/>
+          <connect from_op="Cross Validation Log" from_port="through 1" to_port="performance"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
@@ -135,7 +156,7 @@
           <portSpacing port="sink_output 1" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="514" y="136">
+      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="715" y="136">
         <parameter key="repository_entry" value="../parameters/RF_params"/>
       </operator>
       <connect from_op="Read Train Data" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
@@ -148,6 +169,9 @@
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
+      <description align="center" color="yellow" colored="false" height="103" resized="true" width="214" x="32" y="251">normal&lt;br&gt;n_trees: 1-250&lt;br&gt;criterion: all except least_square&lt;br&gt;max_depth: 1-50</description>
+      <description align="center" color="yellow" colored="false" height="93" resized="true" width="231" x="257" y="249">with pruning&lt;br/&gt;confidence: 0.001-0.5</description>
+      <description align="center" color="yellow" colored="false" height="94" resized="true" width="186" x="494" y="249">with prepruning&lt;br/&gt;min_gain 0.001-10&lt;br/&gt;min_leaf_size: 1-10</description>
     </process>
   </operator>
 </process>

@@ -21,7 +21,7 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="447" y="289">
+      <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="447" y="238">
         <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/BSVM_optimize.log"/>
         <list key="log">
           <parameter key="Execution Time (ms)" value="operator.Optimize Parameters (Grid).value.time"/>

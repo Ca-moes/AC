@@ -32,9 +32,9 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="SVM.kernel_type" value="neural"/>
-          <parameter key="SVM.kernel_a" value="[0;100;10;linear]"/>
-          <parameter key="SVM.kernel_b" value="[0;100;10;linear]"/>
+          <parameter key="SVM.kernel_type" value="polynomial"/>
+          <parameter key="SVM.C" value="[-1.0;1000;10;logarithmic (legacy)]"/>
+          <parameter key="SVM.kernel_degree" value="[0.001;1;10;logarithmic]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -63,7 +63,7 @@
                 <parameter key="local_random_seed" value="1992"/>
               </operator>
               <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="246" y="34">
-                <parameter key="kernel_type" value="neural"/>
+                <parameter key="kernel_type" value="polynomial"/>
                 <parameter key="kernel_gamma" value="1.0"/>
                 <parameter key="kernel_sigma1" value="1.0"/>
                 <parameter key="kernel_sigma2" value="0.0"/>
@@ -148,6 +148,20 @@
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Bagging Log" width="90" x="514" y="187">
+            <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/GBT_cross.log"/>
+            <list key="log">
+              <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
+              <parameter key="Execution Time" value="operator.Apply Model.value.time"/>
+              <parameter key="kernel_type" value="operator.SVM.parameter.kernel_type"/>
+              <parameter key="C" value="operator.SVM.parameter.C"/>
+              <parameter key="degree" value="operator.SVM.parameter.kernel_degree"/>
+            </list>
+            <parameter key="sorting_type" value="none"/>
+            <parameter key="sorting_dimension" value="Iteration"/>
+            <parameter key="sorting_k" value="100"/>
+            <parameter key="persistent" value="false"/>
+          </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
           <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
@@ -162,6 +176,15 @@
       </operator>
       <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="581" y="136">
         <parameter key="repository_entry" value="../parameters/SVM_params"/>
+      </operator>
+      <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="447" y="187">
+        <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/SVM_optimize.log"/>
+        <list key="log">
+          <parameter key="Execution Time (ms)" value="operator.Optimize Parameters (Grid).value.time"/>
+        </list>
+        <parameter key="sorting_type" value="none"/>
+        <parameter key="sorting_k" value="100"/>
+        <parameter key="persistent" value="false"/>
       </operator>
       <connect from_op="Read Train Data" from_port="result 1" to_op="Execute encoding" to_port="input 1"/>
       <connect from_op="Execute encoding" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
@@ -178,7 +201,7 @@
       <portSpacing port="sink_result 5" spacing="0"/>
       <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="203" y="333">Dot&lt;br&gt;C: -1-1000 log legacy&lt;br&gt;&lt;br&gt;&lt;br&gt;</description>
       <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="392" y="332">Radial&lt;br/&gt;gamma: 0.001-5 log</description>
-      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="582" y="331">Polynomial&lt;br&gt;degree:0.001-1 log&lt;br&gt;</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="582" y="332">Polynomial&lt;br&gt;degree:0.001-1 log&lt;br&gt;</description>
       <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="10" y="536">neural&lt;br/&gt;kernel a:&lt;br/&gt;kernel b:&lt;br&gt;</description>
       <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="199" y="532">anova</description>
       <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="391" y="531">epachnenikov</description>

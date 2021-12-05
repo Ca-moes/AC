@@ -12,8 +12,17 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Execute read_train_data_95_96" width="90" x="45" y="34">
-        <parameter key="process_location" value="//ac/rapid_miner/models/read_train_data_95_96"/>
+      <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="380" y="238">
+        <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/BSVM_dates_optimize.log"/>
+        <list key="log">
+          <parameter key="Execution Time (ms)" value="operator.Optimize Parameters (Grid).value.time"/>
+        </list>
+        <parameter key="sorting_type" value="none"/>
+        <parameter key="sorting_k" value="100"/>
+        <parameter key="persistent" value="false"/>
+      </operator>
+      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Execute read_train_data_split" width="90" x="45" y="34">
+        <parameter key="process_location" value="../read_train_data_split"/>
         <parameter key="use_input" value="true"/>
         <parameter key="store_output" value="false"/>
         <parameter key="propagate_metadata_recursively" value="true"/>
@@ -41,7 +50,7 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" width="90" x="380" y="34">
         <list key="parameters">
-          <parameter key="SVM.C" value="[-1;1000;10;logarithmic (legacy)]"/>
+          <parameter key="SVM.C" value="[-1.0;10;10;logarithmic (legacy)]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -94,19 +103,20 @@
             <parameter key="create_view" value="false"/>
           </operator>
           <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="514" y="34">
-            <parameter key="manually_set_positive_class" value="false"/>
-            <parameter key="main_criterion" value="first"/>
+            <parameter key="manually_set_positive_class" value="true"/>
+            <parameter key="positive_class" value="No"/>
+            <parameter key="main_criterion" value="AUC"/>
             <parameter key="accuracy" value="true"/>
-            <parameter key="classification_error" value="false"/>
+            <parameter key="classification_error" value="true"/>
             <parameter key="kappa" value="false"/>
             <parameter key="AUC (optimistic)" value="false"/>
-            <parameter key="AUC" value="false"/>
+            <parameter key="AUC" value="true"/>
             <parameter key="AUC (pessimistic)" value="false"/>
             <parameter key="precision" value="false"/>
             <parameter key="recall" value="false"/>
             <parameter key="lift" value="false"/>
             <parameter key="fallout" value="false"/>
-            <parameter key="f_measure" value="false"/>
+            <parameter key="f_measure" value="true"/>
             <parameter key="false_positive" value="false"/>
             <parameter key="false_negative" value="false"/>
             <parameter key="true_positive" value="false"/>
@@ -120,7 +130,7 @@
             <parameter key="skip_undefined_labels" value="true"/>
             <parameter key="use_example_weights" value="true"/>
           </operator>
-          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Cross Validation Log" width="90" x="581" y="238">
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Bagging Log" width="90" x="581" y="238">
             <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/GBT_cross.log"/>
             <list key="log">
               <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
@@ -128,6 +138,7 @@
               <parameter key="Bagging sample ratio" value="operator.Bagging.parameter.sample_ratio"/>
               <parameter key="iterations" value="operator.Bagging.parameter.iterations"/>
               <parameter key="C" value="operator.SVM.parameter.C"/>
+              <parameter key="AUC" value="operator.Performance.value.AUC"/>
             </list>
             <parameter key="sorting_type" value="none"/>
             <parameter key="sorting_dimension" value="Iteration"/>
@@ -153,17 +164,8 @@
       <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="581" y="136">
         <parameter key="repository_entry" value="../parameters/BSVM_dates_params"/>
       </operator>
-      <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="380" y="238">
-        <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/BSVM_dates_optimize.log"/>
-        <list key="log">
-          <parameter key="Execution Time (ms)" value="operator.Optimize Parameters (Grid).value.time"/>
-        </list>
-        <parameter key="sorting_type" value="none"/>
-        <parameter key="sorting_k" value="100"/>
-        <parameter key="persistent" value="false"/>
-      </operator>
-      <connect from_op="Execute read_train_data_95_96" from_port="result 1" to_op="Execute encoding" to_port="input 1"/>
-      <connect from_op="Execute read_train_data_95_96" from_port="result 2" to_op="Execute encoding (2)" to_port="input 1"/>
+      <connect from_op="Execute read_train_data_split" from_port="result 1" to_op="Execute encoding" to_port="input 1"/>
+      <connect from_op="Execute read_train_data_split" from_port="result 2" to_op="Execute encoding (2)" to_port="input 1"/>
       <connect from_op="Execute encoding (2)" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 2"/>
       <connect from_op="Execute encoding" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
