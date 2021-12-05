@@ -29,7 +29,16 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="split_data" compatibility="9.10.001" expanded="true" height="103" name="Split Data" width="90" x="179" y="136">
+      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Test Data" width="90" x="45" y="340">
+        <parameter key="process_location" value="../read_test_data"/>
+        <parameter key="use_input" value="true"/>
+        <parameter key="store_output" value="false"/>
+        <parameter key="propagate_metadata_recursively" value="true"/>
+        <parameter key="cache_process" value="true"/>
+        <list key="macros"/>
+        <parameter key="fail_for_unknown_macros" value="true"/>
+      </operator>
+      <operator activated="false" class="split_data" compatibility="9.10.001" expanded="true" height="103" name="Split Data" width="90" x="246" y="34">
         <enumeration key="partitions">
           <parameter key="ratio" value="0.9"/>
           <parameter key="ratio" value="0.1"/>
@@ -38,7 +47,7 @@
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
       </operator>
-      <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="313" y="34">
+      <operator activated="false" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="380" y="34">
         <parameter key="number_of_neighbours" value="5"/>
         <parameter key="normalize" value="true"/>
         <parameter key="equalize_classes" value="true"/>
@@ -49,8 +58,8 @@
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
       </operator>
-      <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="447" y="34">
-        <parameter key="number_of_trees" value="120"/>
+      <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="313" y="187">
+        <parameter key="number_of_trees" value="175"/>
         <parameter key="criterion" value="gini_index"/>
         <parameter key="maximal_depth" value="12"/>
         <parameter key="apply_pruning" value="true"/>
@@ -68,16 +77,7 @@
         <parameter key="local_random_seed" value="1992"/>
         <parameter key="enable_parallel_execution" value="true"/>
       </operator>
-      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Test Data" width="90" x="45" y="340">
-        <parameter key="process_location" value="../read_test_data"/>
-        <parameter key="use_input" value="true"/>
-        <parameter key="store_output" value="false"/>
-        <parameter key="propagate_metadata_recursively" value="true"/>
-        <parameter key="cache_process" value="true"/>
-        <list key="macros"/>
-        <parameter key="fail_for_unknown_macros" value="true"/>
-      </operator>
-      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Validation" width="90" x="447" y="187">
+      <operator activated="false" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Validation" width="90" x="447" y="136">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
@@ -85,7 +85,7 @@
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="648" y="85">
+      <operator activated="false" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="514" y="34">
         <parameter key="manually_set_positive_class" value="true"/>
         <parameter key="positive_class" value="No"/>
         <parameter key="main_criterion" value="first"/>
@@ -113,7 +113,7 @@
         <parameter key="skip_undefined_labels" value="true"/>
         <parameter key="use_example_weights" value="true"/>
       </operator>
-      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="648" y="238">
+      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="103" name="Save Submission" width="90" x="648" y="238">
         <process expanded="true">
           <operator activated="true" class="select_attributes" compatibility="9.10.001" expanded="true" height="82" name="Select Attributes (3)" width="90" x="246" y="34">
             <parameter key="attribute_filter_type" value="subset"/>
@@ -138,7 +138,7 @@
             <parameter key="to_attribute" value=""/>
           </operator>
           <operator activated="true" class="write_csv" compatibility="9.10.001" expanded="true" height="82" name="Write CSV" width="90" x="514" y="34">
-            <parameter key="csv_file" value="C:/Users/fmna/Documents/AC/rapid_miner/models/submissions/RF.csv"/>
+            <parameter key="csv_file" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/submissions/RF.csv"/>
             <parameter key="column_separator" value=","/>
             <parameter key="write_attribute_names" value="true"/>
             <parameter key="quote_nominal_values" value="false"/>
@@ -153,28 +153,27 @@
           <connect from_op="Write CSV" from_port="through" to_port="out 1"/>
           <portSpacing port="source_in 1" spacing="0"/>
           <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="source_in 3" spacing="0"/>
           <portSpacing port="sink_out 1" spacing="0"/>
           <portSpacing port="sink_out 2" spacing="0"/>
+          <portSpacing port="sink_out 3" spacing="0"/>
         </process>
       </operator>
       <connect from_op="Retrieve" from_port="output" to_op="Set Parameters" to_port="parameter set"/>
-      <connect from_op="Read Train Data" from_port="result 1" to_op="Split Data" to_port="example set"/>
+      <connect from_op="Read Train Data" from_port="result 1" to_op="Random Forest" to_port="training set"/>
+      <connect from_op="Read Test Data" from_port="result 1" to_op="Apply Model Test" to_port="unlabelled data"/>
       <connect from_op="Split Data" from_port="partition 1" to_op="SMOTE Upsampling" to_port="exa"/>
       <connect from_op="Split Data" from_port="partition 2" to_op="Apply Model Validation" to_port="unlabelled data"/>
-      <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Random Forest" to_port="training set"/>
-      <connect from_op="Random Forest" from_port="model" to_op="Apply Model Validation" to_port="model"/>
-      <connect from_op="Read Test Data" from_port="result 1" to_op="Apply Model Test" to_port="unlabelled data"/>
+      <connect from_op="Random Forest" from_port="model" to_op="Apply Model Test" to_port="model"/>
       <connect from_op="Apply Model Validation" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
-      <connect from_op="Apply Model Validation" from_port="model" to_op="Apply Model Test" to_port="model"/>
       <connect from_op="Apply Model Test" from_port="labelled data" to_op="Save Submission" to_port="in 1"/>
-      <connect from_op="Apply Model Test" from_port="model" to_port="result 3"/>
-      <connect from_op="Performance" from_port="performance" to_port="result 1"/>
-      <connect from_op="Save Submission" from_port="out 1" to_port="result 2"/>
+      <connect from_op="Apply Model Test" from_port="model" to_op="Save Submission" to_port="in 2"/>
+      <connect from_op="Save Submission" from_port="out 1" to_port="result 1"/>
+      <connect from_op="Save Submission" from_port="out 2" to_port="result 2"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
-      <portSpacing port="sink_result 4" spacing="0"/>
     </process>
   </operator>
 </process>

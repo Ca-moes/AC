@@ -42,7 +42,7 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="112" y="34">
+              <operator activated="false" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="112" y="34">
                 <parameter key="number_of_neighbours" value="5"/>
                 <parameter key="normalize" value="true"/>
                 <parameter key="equalize_classes" value="true"/>
@@ -64,8 +64,7 @@
                 <parameter key="minimal_size_for_split" value="2"/>
                 <parameter key="number_of_prepruning_alternatives" value="3"/>
               </operator>
-              <connect from_port="training set" to_op="SMOTE Upsampling" to_port="exa"/>
-              <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Decision Tree" to_port="training set"/>
+              <connect from_port="training set" to_op="Decision Tree" to_port="training set"/>
               <connect from_op="Decision Tree" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
               <portSpacing port="sink_model" spacing="0"/>
@@ -78,7 +77,7 @@
                 <parameter key="create_view" value="false"/>
               </operator>
               <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="246" y="34">
-                <parameter key="manually_set_positive_class" value="true"/>
+                <parameter key="manually_set_positive_class" value="false"/>
                 <parameter key="positive_class" value="No"/>
                 <parameter key="main_criterion" value="AUC"/>
                 <parameter key="accuracy" value="true"/>

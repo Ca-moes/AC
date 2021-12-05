@@ -32,10 +32,9 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="SVM.kernel_type" value="dot,radial,polynomial"/>
-          <parameter key="SVM.C" value="-1,0.1,1,10,100"/>
-          <parameter key="SVM.convergence_epsilon" value="[0.1;1;10;linear]"/>
-          <parameter key="SVM.scale" value="true,false"/>
+          <parameter key="SVM.kernel_type" value="neural"/>
+          <parameter key="SVM.kernel_a" value="[0;100;10;linear]"/>
+          <parameter key="SVM.kernel_b" value="[0;100;10;linear]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -43,7 +42,7 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="166" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="179" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="166" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="380" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="10"/>
@@ -64,7 +63,7 @@
                 <parameter key="local_random_seed" value="1992"/>
               </operator>
               <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="246" y="34">
-                <parameter key="kernel_type" value="dot"/>
+                <parameter key="kernel_type" value="neural"/>
                 <parameter key="kernel_gamma" value="1.0"/>
                 <parameter key="kernel_sigma1" value="1.0"/>
                 <parameter key="kernel_sigma2" value="0.0"/>
@@ -110,11 +109,11 @@
                 <parameter key="positive_class" value="No"/>
                 <parameter key="main_criterion" value="AUC"/>
                 <parameter key="accuracy" value="true"/>
-                <parameter key="classification_error" value="true"/>
+                <parameter key="classification_error" value="false"/>
                 <parameter key="kappa" value="false"/>
-                <parameter key="AUC (optimistic)" value="true"/>
+                <parameter key="AUC (optimistic)" value="false"/>
                 <parameter key="AUC" value="true"/>
-                <parameter key="AUC (pessimistic)" value="true"/>
+                <parameter key="AUC (pessimistic)" value="false"/>
                 <parameter key="precision" value="true"/>
                 <parameter key="recall" value="true"/>
                 <parameter key="lift" value="false"/>
@@ -177,6 +176,14 @@
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
       <portSpacing port="sink_result 5" spacing="0"/>
+      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="203" y="333">Dot&lt;br&gt;C: -1-1000 log legacy&lt;br&gt;&lt;br&gt;&lt;br&gt;</description>
+      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="392" y="332">Radial&lt;br/&gt;gamma: 0.001-5 log</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="582" y="331">Polynomial&lt;br&gt;degree:0.001-1 log&lt;br&gt;</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="10" y="536">neural&lt;br/&gt;kernel a:&lt;br/&gt;kernel b:&lt;br&gt;</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="199" y="532">anova</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="391" y="531">epachnenikov</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="583" y="533">multiquadratic</description>
+      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="11" y="336">Comum&lt;br&gt;N&amp;#227;o mexer em epsilons&lt;br&gt;L1: 0-10&lt;br/&gt;L2:0-10&lt;br&gt;</description>
     </process>
   </operator>
 </process>

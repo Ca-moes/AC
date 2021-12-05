@@ -104,36 +104,6 @@
         <parameter key="target_role" value="label"/>
         <list key="set_additional_roles"/>
       </operator>
-      <operator activated="false" class="select_attributes" compatibility="9.10.001" expanded="true" height="82" name="Unselect loan_id" width="90" x="246" y="340">
-        <parameter key="attribute_filter_type" value="subset"/>
-        <parameter key="attribute" value=""/>
-        <parameter key="attributes" value="age_acc|age_clt|amount_loan|amount_trans_abs_min|amount_trans_last|amount_trans_max|amount_trans_mean|amount_trans_min|amount_trans_rangev|amount_trans_std|average salary|balance_abs_min|balance_last|balance_max|balance_mean|balance_min|balance_rangev|balance_std|duration|frequency|gender_clt|no. of commited crimes '95|no. of commited crimes '96|no. of enterpreneurs per 1000 inhabitants|no. of inhabitants|operation_count|payments|region|status|type_trans_count_credit|type_trans_count_withdrawal|type_trans_cov_credit|type_trans_cov_withdrawal|type_trans_mean_credit|type_trans_mean_withdrawal|unemploymant rate '95|unemploymant rate '96"/>
-        <parameter key="use_except_expression" value="false"/>
-        <parameter key="value_type" value="attribute_value"/>
-        <parameter key="use_value_type_exception" value="false"/>
-        <parameter key="except_value_type" value="time"/>
-        <parameter key="block_type" value="attribute_block"/>
-        <parameter key="use_block_type_exception" value="false"/>
-        <parameter key="except_block_type" value="value_matrix_row_start"/>
-        <parameter key="invert_selection" value="false"/>
-        <parameter key="include_special_attributes" value="false"/>
-      </operator>
-      <operator activated="false" class="remap_binominals" compatibility="9.10.001" expanded="true" height="82" name="Remap Binominals" width="90" x="581" y="187">
-        <parameter key="attribute_filter_type" value="single"/>
-        <parameter key="attribute" value="status"/>
-        <parameter key="attributes" value=""/>
-        <parameter key="use_except_expression" value="false"/>
-        <parameter key="value_type" value="binominal"/>
-        <parameter key="use_value_type_exception" value="false"/>
-        <parameter key="except_value_type" value="binominal"/>
-        <parameter key="block_type" value="value_matrix_start"/>
-        <parameter key="use_block_type_exception" value="false"/>
-        <parameter key="except_block_type" value="value_matrix_start"/>
-        <parameter key="invert_selection" value="false"/>
-        <parameter key="include_special_attributes" value="true"/>
-        <parameter key="negative_value" value="No"/>
-        <parameter key="positive_value" value="Yes"/>
-      </operator>
       <operator activated="true" class="nominal_to_binominal" compatibility="9.10.001" expanded="true" height="103" name="gender to Binomial" width="90" x="581" y="34">
         <parameter key="return_preprocessing_model" value="false"/>
         <parameter key="create_view" value="false"/>
@@ -177,11 +147,8 @@
       <connect from_op="status to Binominal" from_port="example set output" to_op="Set status as label" to_port="example set input"/>
       <connect from_op="Set status as label" from_port="example set output" to_op="gender to Binomial" to_port="example set input"/>
       <connect from_op="gender to Binomial" from_port="example set output" to_op="Normalize" to_port="example set input"/>
-      <connect from_op="Normalize" from_port="example set output" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
-      <portSpacing port="sink_result 2" spacing="0"/>
-      <description align="center" color="yellow" colored="false" height="244" resized="true" width="424" x="79" y="233">loan_id a ficar com o role de id deve n&amp;#227;o ser usado para metricas do model&lt;br&gt;https://community.rapidminer.com/discussion/371/id-attribute</description>
     </process>
   </operator>
 </process>
