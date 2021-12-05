@@ -77,17 +77,17 @@
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
       <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="581" y="34">
-        <parameter key="kernel_type" value="dot"/>
+        <parameter key="kernel_type" value="polynomial"/>
         <parameter key="kernel_gamma" value="1.0"/>
         <parameter key="kernel_sigma1" value="1.0"/>
         <parameter key="kernel_sigma2" value="0.0"/>
         <parameter key="kernel_sigma3" value="2.0"/>
         <parameter key="kernel_shift" value="1.0"/>
-        <parameter key="kernel_degree" value="2.0"/>
+        <parameter key="kernel_degree" value="0.015848931924611138"/>
         <parameter key="kernel_a" value="1.0"/>
         <parameter key="kernel_b" value="0.0"/>
         <parameter key="kernel_cache" value="200"/>
-        <parameter key="C" value="0.1"/>
+        <parameter key="C" value="-1.0"/>
         <parameter key="convergence_epsilon" value="0.001"/>
         <parameter key="max_iterations" value="100000"/>
         <parameter key="scale" value="true"/>

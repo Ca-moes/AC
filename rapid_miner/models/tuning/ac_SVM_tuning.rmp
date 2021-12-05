@@ -33,7 +33,7 @@
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
           <parameter key="SVM.kernel_type" value="polynomial"/>
-          <parameter key="SVM.C" value="[-1.0;1000;10;logarithmic (legacy)]"/>
+          <parameter key="SVM.C" value="[-1.0;100;10;logarithmic (legacy)]"/>
           <parameter key="SVM.kernel_degree" value="[0.001;1;10;logarithmic]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
