@@ -32,9 +32,7 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="SVM.kernel_type" value="polynomial"/>
-          <parameter key="SVM.C" value="[-1.0;100;10;logarithmic (legacy)]"/>
-          <parameter key="SVM.kernel_degree" value="[0.001;1;10;logarithmic]"/>
+          <parameter key="SVM.kernel_type" value="dot"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -62,8 +60,8 @@
                 <parameter key="use_local_random_seed" value="false"/>
                 <parameter key="local_random_seed" value="1992"/>
               </operator>
-              <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="246" y="34">
-                <parameter key="kernel_type" value="polynomial"/>
+              <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="313" y="34">
+                <parameter key="kernel_type" value="dot"/>
                 <parameter key="kernel_gamma" value="1.0"/>
                 <parameter key="kernel_sigma1" value="1.0"/>
                 <parameter key="kernel_sigma2" value="0.0"/>

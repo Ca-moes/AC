@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.10.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.10.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Account" width="90" x="45" y="34">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\account.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="true"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="account_id.true.integer.id"/>
+          <parameter key="1" value="district_id.true.integer.attribute"/>
+          <parameter key="2" value="frequency.true.polynominal.attribute"/>
+          <parameter key="3" value="date.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Client" width="90" x="45" y="85">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\client.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="client_id.true.integer.id"/>
+          <parameter key="1" value="birth_number.true.integer.attribute"/>
+          <parameter key="2" value="district_id.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Disposition" width="90" x="45" y="136">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\disp.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="disp_id.true.integer.id"/>
+          <parameter key="1" value="client_id.true.integer.attribute"/>
+          <parameter key="2" value="account_id.true.integer.attribute"/>
+          <parameter key="3" value="type.true.polynominal.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="District" width="90" x="45" y="187">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\district.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="true"/>
+        <parameter key="use_quotes" value="false"/>
+        <parameter key="quotes_character" value="'"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="code .true.integer.id"/>
+          <parameter key="1" value="name .true.polynominal.attribute"/>
+          <parameter key="2" value="region.true.polynominal.attribute"/>
+          <parameter key="3" value="no\. of inhabitants.true.integer.attribute"/>
+          <parameter key="4" value="no\. of municipalities with inhabitants &lt; 499 .true.integer.attribute"/>
+          <parameter key="5" value="no\. of municipalities with inhabitants 500-1999.true.integer.attribute"/>
+          <parameter key="6" value="no\. of municipalities with inhabitants 2000-9999 .true.integer.attribute"/>
+          <parameter key="7" value="no\. of municipalities with inhabitants &gt;10000 .true.integer.attribute"/>
+          <parameter key="8" value="no\. of cities .true.integer.attribute"/>
+          <parameter key="9" value="ratio of urban inhabitants .true.real.attribute"/>
+          <parameter key="10" value="average salary .true.integer.attribute"/>
+          <parameter key="11" value="unemploymant rate '95 .true.polynominal.attribute"/>
+          <parameter key="12" value="unemploymant rate '96 .true.real.attribute"/>
+          <parameter key="13" value="no\. of enterpreneurs per 1000 inhabitants .true.integer.attribute"/>
+          <parameter key="14" value="no\. of commited crimes '95 .true.polynominal.attribute"/>
+          <parameter key="15" value="no\. of commited crimes '96.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Card Train" width="90" x="45" y="289">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\card_train.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="card_id.true.integer.id"/>
+          <parameter key="1" value="disp_id.true.integer.attribute"/>
+          <parameter key="2" value="type.true.polynominal.attribute"/>
+          <parameter key="3" value="issued.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Card Test" width="90" x="45" y="340">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\card_test.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="card_id.true.integer.id"/>
+          <parameter key="1" value="disp_id.true.integer.attribute"/>
+          <parameter key="2" value="type.true.polynominal.attribute"/>
+          <parameter key="3" value="issued.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Loan train" width="90" x="45" y="595">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\loan_train.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="loan_id.true.integer.id"/>
+          <parameter key="1" value="account_id.true.integer.attribute"/>
+          <parameter key="2" value="date.true.integer.attribute"/>
+          <parameter key="3" value="amount.true.integer.attribute"/>
+          <parameter key="4" value="duration.true.integer.attribute"/>
+          <parameter key="5" value="payments.true.integer.attribute"/>
+          <parameter key="6" value="status.true.binominal.label"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Loan test" width="90" x="45" y="646">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\loan_test.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="loan_id.true.integer.id"/>
+          <parameter key="1" value="account_id.true.integer.attribute"/>
+          <parameter key="2" value="date.true.integer.attribute"/>
+          <parameter key="3" value="amount.true.integer.attribute"/>
+          <parameter key="4" value="duration.true.integer.attribute"/>
+          <parameter key="5" value="payments.true.integer.attribute"/>
+          <parameter key="6" value="status.true.binominal.label"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Transaction Train" width="90" x="45" y="442">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\trans_train.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="trans_id.true.integer.id"/>
+          <parameter key="1" value="account_id.true.integer.attribute"/>
+          <parameter key="2" value="date.true.integer.attribute"/>
+          <parameter key="3" value="type.true.polynominal.attribute"/>
+          <parameter key="4" value="operation.true.polynominal.attribute"/>
+          <parameter key="5" value="amount.true.real.attribute"/>
+          <parameter key="6" value="balance.true.real.attribute"/>
+          <parameter key="7" value="k_symbol.true.polynominal.attribute"/>
+          <parameter key="8" value="bank.true.polynominal.attribute"/>
+          <parameter key="9" value="account.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Transaction Test" width="90" x="45" y="493">
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\data\trans_test.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="trans_id.true.integer.id"/>
+          <parameter key="1" value="account_id.true.integer.attribute"/>
+          <parameter key="2" value="date.true.integer.attribute"/>
+          <parameter key="3" value="type.true.polynominal.attribute"/>
+          <parameter key="4" value="operation.true.polynominal.attribute"/>
+          <parameter key="5" value="amount.true.real.attribute"/>
+          <parameter key="6" value="balance.true.real.attribute"/>
+          <parameter key="7" value="k_symbol.true.polynominal.attribute"/>
+          <parameter key="8" value="bank.true.polynominal.attribute"/>
+          <parameter key="9" value="account.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <connect from_op="Account" from_port="output" to_port="result 1"/>
+      <connect from_op="Client" from_port="output" to_port="result 2"/>
+      <connect from_op="Disposition" from_port="output" to_port="result 3"/>
+      <connect from_op="District" from_port="output" to_port="result 4"/>
+      <connect from_op="Card Train" from_port="output" to_port="result 5"/>
+      <connect from_op="Card Test" from_port="output" to_port="result 6"/>
+      <connect from_op="Loan train" from_port="output" to_port="result 9"/>
+      <connect from_op="Loan test" from_port="output" to_port="result 10"/>
+      <connect from_op="Transaction Train" from_port="output" to_port="result 7"/>
+      <connect from_op="Transaction Test" from_port="output" to_port="result 8"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+      <portSpacing port="sink_result 5" spacing="0"/>
+      <portSpacing port="sink_result 6" spacing="0"/>
+      <portSpacing port="sink_result 7" spacing="0"/>
+      <portSpacing port="sink_result 8" spacing="0"/>
+      <portSpacing port="sink_result 9" spacing="0"/>
+      <portSpacing port="sink_result 10" spacing="0"/>
+      <portSpacing port="sink_result 11" spacing="0"/>
+    </process>
+  </operator>
+</process>
