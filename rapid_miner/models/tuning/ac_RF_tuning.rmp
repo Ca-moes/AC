@@ -23,8 +23,8 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="Random Forest.apply_pruning" value="true"/>
-          <parameter key="Random Forest.confidence" value="[0.001;0.5;10;logarithmic]"/>
+          <parameter key="Random Forest.number_of_trees" value="[50;200.0;10;linear]"/>
+          <parameter key="Random Forest.criterion" value="gain_ratio,information_gain,gini_index,accuracy"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -32,7 +32,7 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="380" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="10"/>
@@ -87,7 +87,7 @@
               <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance (2)" width="90" x="246" y="34">
                 <parameter key="manually_set_positive_class" value="true"/>
                 <parameter key="positive_class" value="No"/>
-                <parameter key="main_criterion" value="AUC"/>
+                <parameter key="main_criterion" value="f_measure"/>
                 <parameter key="accuracy" value="true"/>
                 <parameter key="classification_error" value="false"/>
                 <parameter key="kappa" value="false"/>
@@ -125,7 +125,7 @@
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
-          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="648" y="136">
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="581" y="136">
             <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/RF_cross.log"/>
             <list key="log">
               <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
@@ -156,7 +156,7 @@
           <portSpacing port="sink_output 1" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="715" y="136">
+      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="581" y="136">
         <parameter key="repository_entry" value="../parameters/RF_params"/>
       </operator>
       <connect from_op="Read Train Data" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
