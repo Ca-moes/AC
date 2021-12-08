@@ -32,7 +32,10 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="SVM.kernel_type" value="dot"/>
+          <parameter key="SVM.kernel_type" value="dot,radial,polynomial"/>
+          <parameter key="SVM.C" value="[1;1000;5;logarithmic (legacy)]"/>
+          <parameter key="SVM.kernel_gamma" value="[0.001;5;5;logarithmic]"/>
+          <parameter key="SVM.kernel_degree" value="[0.001;1;5;logarithmic]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -40,10 +43,10 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="166" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="380" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="380" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
-            <parameter key="number_of_folds" value="10"/>
+            <parameter key="number_of_folds" value="5"/>
             <parameter key="sampling_type" value="stratified sampling"/>
             <parameter key="use_local_random_seed" value="false"/>
             <parameter key="local_random_seed" value="1992"/>
@@ -132,7 +135,6 @@
               </operator>
               <connect from_port="model" to_op="Apply Model" to_port="model"/>
               <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
-              <connect from_port="through 1" to_port="performance 2"/>
               <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
               <connect from_op="Performance" from_port="performance" to_port="performance 1"/>
               <portSpacing port="source_model" spacing="0"/>
@@ -142,18 +144,18 @@
               <portSpacing port="sink_test set results" spacing="0"/>
               <portSpacing port="sink_performance 1" spacing="0"/>
               <portSpacing port="sink_performance 2" spacing="0"/>
-              <portSpacing port="sink_performance 3" spacing="0"/>
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
-          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Bagging Log" width="90" x="514" y="187">
-            <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/GBT_cross.log"/>
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="SVM Log" width="90" x="715" y="136">
+            <parameter key="filename" value="C:/Users/fmna/Documents/AC/rapid_miner/models/logs/SVM_cross.log"/>
             <list key="log">
               <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
               <parameter key="Execution Time" value="operator.Apply Model.value.time"/>
               <parameter key="kernel_type" value="operator.SVM.parameter.kernel_type"/>
               <parameter key="C" value="operator.SVM.parameter.C"/>
               <parameter key="degree" value="operator.SVM.parameter.kernel_degree"/>
+              <parameter key="AUC" value="operator.Cross Validation.value.performance main criterion"/>
             </list>
             <parameter key="sorting_type" value="none"/>
             <parameter key="sorting_dimension" value="Iteration"/>
@@ -162,8 +164,8 @@
           </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
-          <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
-          <connect from_op="Cross Validation" from_port="performance 2" to_port="output 1"/>
+          <connect from_op="Cross Validation" from_port="performance 1" to_op="SVM Log" to_port="through 1"/>
+          <connect from_op="SVM Log" from_port="through 1" to_port="performance"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
@@ -197,14 +199,14 @@
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
       <portSpacing port="sink_result 5" spacing="0"/>
-      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="203" y="333">Dot&lt;br&gt;C: -1-1000 log legacy&lt;br&gt;&lt;br&gt;&lt;br&gt;</description>
-      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="392" y="332">Radial&lt;br/&gt;gamma: 0.001-5 log</description>
-      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="582" y="332">Polynomial&lt;br&gt;degree:0.001-1 log&lt;br&gt;</description>
-      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="10" y="536">neural&lt;br/&gt;kernel a:&lt;br/&gt;kernel b:&lt;br&gt;</description>
+      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="202" y="385">Dot&lt;br&gt;C: -1-1000 log legacy&lt;br&gt;&lt;br&gt;&lt;br&gt;</description>
+      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="392" y="385">Radial&lt;br/&gt;gamma: 0.001-5 log</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="584" y="383">Polynomial&lt;br&gt;degree:0.001-1 log&lt;br&gt;</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="10" y="532">neural&lt;br/&gt;kernel a:&lt;br/&gt;kernel b:&lt;br&gt;</description>
       <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="199" y="532">anova</description>
       <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="391" y="531">epachnenikov</description>
       <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="583" y="533">multiquadratic</description>
-      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="11" y="336">Comum&lt;br&gt;N&amp;#227;o mexer em epsilons&lt;br&gt;L1: 0-10&lt;br/&gt;L2:0-10&lt;br&gt;</description>
+      <description align="left" color="yellow" colored="false" height="105" resized="false" width="180" x="11" y="384">Comum&lt;br&gt;N&amp;#227;o mexer em epsilons&lt;br&gt;L1: 0-10&lt;br/&gt;L2:0-10&lt;br&gt;</description>
     </process>
   </operator>
 </process>

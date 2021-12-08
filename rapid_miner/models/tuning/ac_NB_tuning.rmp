@@ -21,6 +21,15 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
+      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Execute encoding" width="90" x="179" y="34">
+        <parameter key="process_location" value="../encoding"/>
+        <parameter key="use_input" value="true"/>
+        <parameter key="store_output" value="false"/>
+        <parameter key="propagate_metadata_recursively" value="true"/>
+        <parameter key="cache_process" value="true"/>
+        <list key="macros"/>
+        <parameter key="fail_for_unknown_macros" value="true"/>
+      </operator>
       <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="380" y="238">
         <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/NB_optimize.log"/>
         <list key="log">
@@ -29,27 +38,6 @@
         <parameter key="sorting_type" value="none"/>
         <parameter key="sorting_k" value="100"/>
         <parameter key="persistent" value="false"/>
-      </operator>
-      <operator activated="true" class="nominal_to_numerical" compatibility="9.10.001" expanded="true" height="103" name="Gender, Freq and Region" width="90" x="179" y="34">
-        <parameter key="return_preprocessing_model" value="false"/>
-        <parameter key="create_view" value="false"/>
-        <parameter key="attribute_filter_type" value="subset"/>
-        <parameter key="attribute" value="gender_clt"/>
-        <parameter key="attributes" value="|frequency|gender_clt|region"/>
-        <parameter key="use_except_expression" value="false"/>
-        <parameter key="value_type" value="nominal"/>
-        <parameter key="use_value_type_exception" value="false"/>
-        <parameter key="except_value_type" value="file_path"/>
-        <parameter key="block_type" value="single_value"/>
-        <parameter key="use_block_type_exception" value="false"/>
-        <parameter key="except_block_type" value="single_value"/>
-        <parameter key="invert_selection" value="false"/>
-        <parameter key="include_special_attributes" value="false"/>
-        <parameter key="coding_type" value="dummy coding"/>
-        <parameter key="use_comparison_groups" value="false"/>
-        <list key="comparison_groups"/>
-        <parameter key="unexpected_value_handling" value="all 0 and warning"/>
-        <parameter key="use_underscore_in_name" value="false"/>
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
@@ -61,10 +49,10 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="166" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="179" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="179" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
-            <parameter key="number_of_folds" value="10"/>
+            <parameter key="number_of_folds" value="5"/>
             <parameter key="sampling_type" value="stratified sampling"/>
             <parameter key="use_local_random_seed" value="false"/>
             <parameter key="local_random_seed" value="1992"/>
@@ -86,7 +74,8 @@
                 <parameter key="create_view" value="false"/>
               </operator>
               <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="246" y="34">
-                <parameter key="manually_set_positive_class" value="false"/>
+                <parameter key="manually_set_positive_class" value="true"/>
+                <parameter key="positive_class" value="No"/>
                 <parameter key="main_criterion" value="AUC"/>
                 <parameter key="accuracy" value="true"/>
                 <parameter key="classification_error" value="false"/>
@@ -122,7 +111,6 @@
               <portSpacing port="sink_test set results" spacing="0"/>
               <portSpacing port="sink_performance 1" spacing="0"/>
               <portSpacing port="sink_performance 2" spacing="0"/>
-              <portSpacing port="sink_performance 3" spacing="0"/>
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
@@ -141,7 +129,6 @@
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
           <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
-          <connect from_op="Cross Validation" from_port="performance 2" to_port="output 1"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
@@ -153,8 +140,8 @@
       <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="514" y="136">
         <parameter key="repository_entry" value="../parameters/NB_params"/>
       </operator>
-      <connect from_op="Read Train Data" from_port="result 1" to_op="Gender, Freq and Region" to_port="example set input"/>
-      <connect from_op="Gender, Freq and Region" from_port="example set output" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
+      <connect from_op="Read Train Data" from_port="result 1" to_op="Execute encoding" to_port="input 1"/>
+      <connect from_op="Execute encoding" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_port="result 2"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store" to_port="input"/>

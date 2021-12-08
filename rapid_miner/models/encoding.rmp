@@ -12,7 +12,7 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="false" class="nominal_to_numerical" compatibility="9.10.001" expanded="true" height="103" name="Gender" width="90" x="179" y="238">
+      <operator activated="true" class="nominal_to_numerical" compatibility="9.10.001" expanded="true" height="103" name="Gender" width="90" x="313" y="34">
         <parameter key="return_preprocessing_model" value="false"/>
         <parameter key="create_view" value="false"/>
         <parameter key="attribute_filter_type" value="single"/>
@@ -75,7 +75,7 @@
         <parameter key="unexpected_value_handling" value="all 0 and warning"/>
         <parameter key="use_underscore_in_name" value="false"/>
       </operator>
-      <operator activated="false" class="nominal_to_numerical" compatibility="9.10.001" expanded="true" height="103" name="Freq and Region" width="90" x="581" y="238">
+      <operator activated="true" class="nominal_to_numerical" compatibility="9.10.001" expanded="true" height="103" name="Freq and Region" width="90" x="514" y="34">
         <parameter key="return_preprocessing_model" value="false"/>
         <parameter key="create_view" value="false"/>
         <parameter key="attribute_filter_type" value="subset"/>
@@ -96,7 +96,9 @@
         <parameter key="unexpected_value_handling" value="all 0 and warning"/>
         <parameter key="use_underscore_in_name" value="false"/>
       </operator>
-      <connect from_port="input 1" to_port="result 1"/>
+      <connect from_port="input 1" to_op="Gender" to_port="example set input"/>
+      <connect from_op="Gender" from_port="example set output" to_op="Freq and Region" to_port="example set input"/>
+      <connect from_op="Freq and Region" from_port="example set output" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="source_input 2" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>

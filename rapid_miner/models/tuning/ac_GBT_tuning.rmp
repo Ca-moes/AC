@@ -36,7 +36,7 @@
           <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="112" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
-            <parameter key="number_of_folds" value="10"/>
+            <parameter key="number_of_folds" value="5"/>
             <parameter key="sampling_type" value="stratified sampling"/>
             <parameter key="use_local_random_seed" value="false"/>
             <parameter key="local_random_seed" value="1992"/>
@@ -139,7 +139,7 @@
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
-          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Cross Validation Log" width="90" x="313" y="187">
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="514" y="187">
             <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/GBT_cross.log"/>
             <list key="log">
               <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
@@ -161,7 +161,8 @@
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
           <connect from_op="Cross Validation" from_port="test result set" to_port="output 1"/>
-          <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
+          <connect from_op="Cross Validation" from_port="performance 1" to_op="Cross Validation Log" to_port="through 1"/>
+          <connect from_op="Cross Validation Log" from_port="through 1" to_port="performance"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
@@ -179,17 +180,19 @@
         <parameter key="sorting_k" value="100"/>
         <parameter key="persistent" value="false"/>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="447" y="34">
+      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="581" y="340">
         <parameter key="repository_entry" value="../parameters/GBT_params"/>
       </operator>
       <connect from_op="Read Train Data" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
-      <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 2"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="model" to_port="result 2"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store" to_port="input"/>
-      <connect from_op="Store" from_port="through" to_port="result 1"/>
+      <connect from_op="Store" from_port="through" to_port="result 3"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
       <description align="left" color="yellow" colored="false" height="406" resized="true" width="192" x="192" y="32">To Optimize:&lt;br&gt;n_trees: 1-500&lt;br/&gt;max_depth:1-30&lt;br/&gt;min_rows:0-50&lt;br/&gt;min_split_impro: 0-0.5&lt;br/&gt;n_bins:2-200&lt;br/&gt;learn_rate:0-1-1.0 (log scale)&lt;br/&gt;sample_rate:0.1-1&lt;br/&gt;&lt;br&gt;</description>
     </process>
   </operator>

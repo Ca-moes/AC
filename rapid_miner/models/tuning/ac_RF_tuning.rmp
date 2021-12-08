@@ -23,8 +23,9 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="Random Forest.number_of_trees" value="[50;200.0;10;linear]"/>
           <parameter key="Random Forest.criterion" value="gain_ratio,information_gain,gini_index,accuracy"/>
+          <parameter key="Random Forest.number_of_trees" value="[10;250;10;linear]"/>
+          <parameter key="Random Forest.maximal_depth" value="[10;30;5;linear]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -35,13 +36,22 @@
           <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
-            <parameter key="number_of_folds" value="10"/>
+            <parameter key="number_of_folds" value="5"/>
             <parameter key="sampling_type" value="stratified sampling"/>
             <parameter key="use_local_random_seed" value="false"/>
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="112" y="34">
+              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="103" name="Feature Selection" width="90" x="112" y="34">
+                <parameter key="process_location" value="../feature_selection"/>
+                <parameter key="use_input" value="true"/>
+                <parameter key="store_output" value="false"/>
+                <parameter key="propagate_metadata_recursively" value="true"/>
+                <parameter key="cache_process" value="true"/>
+                <list key="macros"/>
+                <parameter key="fail_for_unknown_macros" value="true"/>
+              </operator>
+              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="246" y="34">
                 <parameter key="number_of_neighbours" value="5"/>
                 <parameter key="normalize" value="true"/>
                 <parameter key="equalize_classes" value="true"/>
@@ -52,7 +62,7 @@
                 <parameter key="use_local_random_seed" value="false"/>
                 <parameter key="local_random_seed" value="1992"/>
               </operator>
-              <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="246" y="34">
+              <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="380" y="34">
                 <parameter key="number_of_trees" value="100"/>
                 <parameter key="criterion" value="gain_ratio"/>
                 <parameter key="maximal_depth" value="50"/>
@@ -71,7 +81,8 @@
                 <parameter key="local_random_seed" value="2001"/>
                 <parameter key="enable_parallel_execution" value="true"/>
               </operator>
-              <connect from_port="training set" to_op="SMOTE Upsampling" to_port="exa"/>
+              <connect from_port="training set" to_op="Feature Selection" to_port="input 1"/>
+              <connect from_op="Feature Selection" from_port="result 1" to_op="SMOTE Upsampling" to_port="exa"/>
               <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Random Forest" to_port="training set"/>
               <connect from_op="Random Forest" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
@@ -84,10 +95,10 @@
                 <list key="application_parameters"/>
                 <parameter key="create_view" value="false"/>
               </operator>
-              <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance (2)" width="90" x="246" y="34">
+              <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="246" y="34">
                 <parameter key="manually_set_positive_class" value="true"/>
                 <parameter key="positive_class" value="No"/>
-                <parameter key="main_criterion" value="f_measure"/>
+                <parameter key="main_criterion" value="AUC"/>
                 <parameter key="accuracy" value="true"/>
                 <parameter key="classification_error" value="false"/>
                 <parameter key="kappa" value="false"/>
@@ -114,8 +125,8 @@
               </operator>
               <connect from_port="model" to_op="Apply Model" to_port="model"/>
               <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
-              <connect from_op="Apply Model" from_port="labelled data" to_op="Performance (2)" to_port="labelled data"/>
-              <connect from_op="Performance (2)" from_port="performance" to_port="performance 1"/>
+              <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+              <connect from_op="Performance" from_port="performance" to_port="performance 1"/>
               <portSpacing port="source_model" spacing="0"/>
               <portSpacing port="source_test set" spacing="0"/>
               <portSpacing port="source_through 1" spacing="0"/>
@@ -126,7 +137,7 @@
             </process>
           </operator>
           <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="581" y="136">
-            <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/RF_cross.log"/>
+            <parameter key="filename" value="C:/Users/fmna/Documents/AC/rapid_miner/models/logs/RF_cross.log"/>
             <list key="log">
               <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
               <parameter key="Execution Time" value="operator.Cross Validation.value.time"/>
