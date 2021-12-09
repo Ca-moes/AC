@@ -21,7 +21,7 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="238">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="238">
         <list key="parameters">
           <parameter key="Gradient Boosted Trees.number_of_trees" value="[50;250;5;logarithmic (legacy)]"/>
           <parameter key="Gradient Boosted Trees.learning_rate" value="[0.001;0.5;10;logarithmic (legacy)]"/>
@@ -42,7 +42,7 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="103" name="Execute feature_selection" width="90" x="45" y="34">
+              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Feature Selection" width="90" x="45" y="34">
                 <parameter key="process_location" value="../feature_selection"/>
                 <parameter key="use_input" value="true"/>
                 <parameter key="store_output" value="false"/>
@@ -83,8 +83,8 @@
                 <parameter key="max_runtime_seconds" value="0"/>
                 <list key="expert_parameters"/>
               </operator>
-              <connect from_port="training set" to_op="Execute feature_selection" to_port="input 1"/>
-              <connect from_op="Execute feature_selection" from_port="result 1" to_op="SMOTE Upsampling" to_port="exa"/>
+              <connect from_port="training set" to_op="Feature Selection" to_port="input 1"/>
+              <connect from_op="Feature Selection" from_port="result 1" to_op="SMOTE Upsampling" to_port="exa"/>
               <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Gradient Boosted Trees" to_port="training set"/>
               <connect from_op="Gradient Boosted Trees" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
@@ -129,7 +129,6 @@
               <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
               <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
               <connect from_op="Performance" from_port="performance" to_port="performance 1"/>
-              <connect from_op="Performance" from_port="example set" to_port="test set results"/>
               <portSpacing port="source_model" spacing="0"/>
               <portSpacing port="source_test set" spacing="0"/>
               <portSpacing port="source_through 1" spacing="0"/>
@@ -160,7 +159,6 @@
           </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
-          <connect from_op="Cross Validation" from_port="test result set" to_port="output 1"/>
           <connect from_op="Cross Validation" from_port="performance 1" to_op="Cross Validation Log" to_port="through 1"/>
           <connect from_op="Cross Validation Log" from_port="through 1" to_port="performance"/>
           <portSpacing port="source_input 1" spacing="0"/>
@@ -168,7 +166,6 @@
           <portSpacing port="sink_performance" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_output 1" spacing="0"/>
-          <portSpacing port="sink_output 2" spacing="0"/>
         </process>
       </operator>
       <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="380" y="442">

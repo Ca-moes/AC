@@ -13,11 +13,11 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="retrieve" compatibility="9.10.001" expanded="true" height="68" name="Retrieve" width="90" x="45" y="238">
-        <parameter key="repository_entry" value="../parameters/GBT_params"/>
+        <parameter key="repository_entry" value="../parameters/XGB_params"/>
       </operator>
       <operator activated="true" class="set_parameters" compatibility="9.10.001" expanded="true" height="82" name="Set Parameters" width="90" x="179" y="238">
         <list key="name_map">
-          <parameter key="Gradient Boosted Trees" value="Gradient Boosted Trees"/>
+          <parameter key="XGBoost" value="XGBoost"/>
         </list>
       </operator>
       <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Train Data" width="90" x="45" y="34">
@@ -29,26 +29,27 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="h2o:gradient_boosted_trees" compatibility="9.10.001" expanded="true" height="103" name="Gradient Boosted Trees" width="90" x="246" y="34">
-        <parameter key="number_of_trees" value="250"/>
-        <parameter key="reproducible" value="false"/>
-        <parameter key="maximum_number_of_threads" value="4"/>
-        <parameter key="use_local_random_seed" value="false"/>
-        <parameter key="local_random_seed" value="1992"/>
-        <parameter key="maximal_depth" value="5"/>
-        <parameter key="min_rows" value="10.0"/>
-        <parameter key="min_split_improvement" value="1.0E-5"/>
-        <parameter key="number_of_bins" value="20"/>
-        <parameter key="learning_rate" value="0.01"/>
-        <parameter key="sample_rate" value="1.0"/>
-        <parameter key="distribution" value="AUTO"/>
-        <parameter key="early_stopping" value="false"/>
-        <parameter key="stopping_rounds" value="1"/>
-        <parameter key="stopping_metric" value="AUTO"/>
-        <parameter key="stopping_tolerance" value="0.001"/>
-        <list key="monotone_constraints"/>
-        <parameter key="max_runtime_seconds" value="0"/>
-        <list key="expert_parameters"/>
+      <operator activated="true" class="xgboost:xgboost" compatibility="0.1.001" expanded="true" height="82" name="XGBoost" width="90" x="246" y="34">
+        <parameter key="booster" value="DART"/>
+        <parameter key="rounds" value="21"/>
+        <parameter key="early_stopping" value="none"/>
+        <parameter key="early_stopping_rounds" value="10"/>
+        <parameter key="learning_rate" value="0.6"/>
+        <parameter key="min_split_loss" value="0.0"/>
+        <parameter key="max_depth" value="6"/>
+        <parameter key="min_child_weight" value="1.0"/>
+        <parameter key="subsample" value="1.0"/>
+        <parameter key="tree_method" value="auto"/>
+        <parameter key="lambda" value="1.0"/>
+        <parameter key="alpha" value="0.0"/>
+        <parameter key="sample_type" value="weighted"/>
+        <parameter key="normalize_type" value="tree"/>
+        <parameter key="rate_drop" value="0.0"/>
+        <parameter key="skip_drop" value="0.0"/>
+        <parameter key="updater" value="shotgun"/>
+        <parameter key="feature_selector" value="thrifty"/>
+        <parameter key="top_k" value="15"/>
+        <enumeration key="expert_parameters"/>
       </operator>
       <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Test Data" width="90" x="45" y="136">
         <parameter key="process_location" value="../read_test_data"/>
@@ -59,11 +60,11 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="447" y="136">
+      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="380" y="136">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="648" y="34">
+      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="514" y="34">
         <process expanded="true">
           <operator activated="true" class="select_attributes" compatibility="9.10.001" expanded="true" height="82" name="Select Attributes (3)" width="90" x="246" y="34">
             <parameter key="attribute_filter_type" value="subset"/>
@@ -88,7 +89,7 @@
             <parameter key="to_attribute" value=""/>
           </operator>
           <operator activated="true" class="write_csv" compatibility="9.10.001" expanded="true" height="82" name="Write CSV" width="90" x="514" y="34">
-            <parameter key="csv_file" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/submissions/RF.csv"/>
+            <parameter key="csv_file" value="C:/Users/fmna/Documents/AC/rapid_miner/models/submissions/XGB.csv"/>
             <parameter key="column_separator" value=","/>
             <parameter key="write_attribute_names" value="true"/>
             <parameter key="quote_nominal_values" value="false"/>
@@ -108,8 +109,8 @@
         </process>
       </operator>
       <connect from_op="Retrieve" from_port="output" to_op="Set Parameters" to_port="parameter set"/>
-      <connect from_op="Read Train Data" from_port="result 1" to_op="Gradient Boosted Trees" to_port="training set"/>
-      <connect from_op="Gradient Boosted Trees" from_port="model" to_op="Apply Model Test" to_port="model"/>
+      <connect from_op="Read Train Data" from_port="result 1" to_op="XGBoost" to_port="training set"/>
+      <connect from_op="XGBoost" from_port="model" to_op="Apply Model Test" to_port="model"/>
       <connect from_op="Read Test Data" from_port="result 1" to_op="Apply Model Test" to_port="unlabelled data"/>
       <connect from_op="Apply Model Test" from_port="labelled data" to_op="Save Submission" to_port="in 1"/>
       <connect from_op="Apply Model Test" from_port="model" to_port="result 2"/>

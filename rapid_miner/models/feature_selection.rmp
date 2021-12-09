@@ -199,7 +199,7 @@
       <operator activated="true" class="featselext:ensemble_feature_selection" compatibility="1.1.004" expanded="true" height="103" name="Ensemble-FS" width="90" x="380" y="34">
         <parameter key="ensemble_size" value="10"/>
         <parameter key="method" value="top-k"/>
-        <parameter key="k" value="15"/>
+        <parameter key="k" value="10"/>
         <parameter key="min_rounds" value="0"/>
         <parameter key="w" value="0.5"/>
         <parameter key="use_absolute_weights" value="false"/>
@@ -216,7 +216,7 @@
             <parameter key="sort_direction" value="descending"/>
             <parameter key="sets_or_ranks" value="sets"/>
             <parameter key="calculate full ranking" value="true"/>
-            <parameter key="k" value="15"/>
+            <parameter key="k" value="10"/>
             <parameter key="relevance_redundancy_relation" value="quotient"/>
             <parameter key="use_ensemble_method" value="none"/>
             <parameter key="ensemble_size" value="10"/>
@@ -228,15 +228,7 @@
           <portSpacing port="sink_weights" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="select_by_weights" compatibility="9.10.001" expanded="true" height="103" name="Select by Weights" width="90" x="648" y="34">
-        <parameter key="weight_relation" value="equals"/>
-        <parameter key="weight" value="1.0"/>
-        <parameter key="k" value="10"/>
-        <parameter key="p" value="0.5"/>
-        <parameter key="deselect_unknown" value="true"/>
-        <parameter key="use_absolute_weights" value="true"/>
-      </operator>
-      <operator activated="true" class="featselext:rfe" compatibility="1.1.004" expanded="true" height="82" name="RFE" width="90" x="380" y="187">
+      <operator activated="false" class="featselext:rfe" compatibility="1.1.004" expanded="true" height="82" name="RFE" width="90" x="380" y="187">
         <parameter key="k" value="15"/>
         <parameter key="ratio" value="0.5"/>
         <parameter key="use_absolute_weights" value="true"/>
@@ -267,18 +259,24 @@
           <portSpacing port="sink_weights" spacing="0"/>
         </process>
       </operator>
+      <operator activated="true" class="select_by_weights" compatibility="9.10.001" expanded="true" height="103" name="Select by Weights" width="90" x="648" y="34">
+        <parameter key="weight_relation" value="equals"/>
+        <parameter key="weight" value="1.0"/>
+        <parameter key="k" value="10"/>
+        <parameter key="p" value="0.5"/>
+        <parameter key="deselect_unknown" value="true"/>
+        <parameter key="use_absolute_weights" value="true"/>
+      </operator>
       <connect from_port="input 1" to_op="Ensemble-FS" to_port="exampleset"/>
       <connect from_op="Ensemble-FS" from_port="weights" to_op="Select by Weights" to_port="weights"/>
       <connect from_op="Ensemble-FS" from_port="exampleset" to_op="Select by Weights" to_port="example set input"/>
       <connect from_op="Select by Weights" from_port="example set output" to_port="result 1"/>
-      <connect from_op="Select by Weights" from_port="original" to_port="result 2"/>
-      <connect from_op="Select by Weights" from_port="weights" to_port="result 3"/>
+      <connect from_op="Select by Weights" from_port="weights" to_port="result 2"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="source_input 2" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
-      <portSpacing port="sink_result 4" spacing="0"/>
       <description align="center" color="yellow" colored="false" height="62" resized="true" width="125" x="564" y="512">Lentos AF</description>
     </process>
   </operator>

@@ -30,7 +30,7 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
           <parameter key="Naive Bayes (Kernel).number_of_kernels" value="[1.0;100.0;10;linear]"/>
           <parameter key="Naive Bayes (Kernel).estimation_mode" value="full,greedy"/>
@@ -41,7 +41,7 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="166" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="179" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="179" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="5"/>
@@ -79,9 +79,9 @@
                 <parameter key="accuracy" value="true"/>
                 <parameter key="classification_error" value="false"/>
                 <parameter key="kappa" value="false"/>
-                <parameter key="AUC (optimistic)" value="true"/>
+                <parameter key="AUC (optimistic)" value="false"/>
                 <parameter key="AUC" value="true"/>
-                <parameter key="AUC (pessimistic)" value="true"/>
+                <parameter key="AUC (pessimistic)" value="false"/>
                 <parameter key="precision" value="true"/>
                 <parameter key="recall" value="true"/>
                 <parameter key="lift" value="false"/>
@@ -110,20 +110,17 @@
               <portSpacing port="sink_test set results" spacing="0"/>
               <portSpacing port="sink_performance 1" spacing="0"/>
               <portSpacing port="sink_performance 2" spacing="0"/>
-              <portSpacing port="sink_performance 3" spacing="0"/>
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
           <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
-          <connect from_op="Cross Validation" from_port="performance 2" to_port="output 1"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_output 1" spacing="0"/>
-          <portSpacing port="sink_output 2" spacing="0"/>
         </process>
       </operator>
       <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="514" y="136">
@@ -134,14 +131,12 @@
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_port="result 2"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store" to_port="input"/>
-      <connect from_op="Optimize Parameters (Grid)" from_port="output 1" to_port="result 3"/>
-      <connect from_op="Store" from_port="through" to_port="result 4"/>
+      <connect from_op="Store" from_port="through" to_port="result 3"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
-      <portSpacing port="sink_result 5" spacing="0"/>
     </process>
   </operator>
 </process>

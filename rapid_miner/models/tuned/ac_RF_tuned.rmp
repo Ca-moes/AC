@@ -12,15 +12,15 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="retrieve" compatibility="9.10.001" expanded="true" height="68" name="Retrieve" width="90" x="45" y="493">
+      <operator activated="true" class="retrieve" compatibility="9.10.001" expanded="true" height="68" name="Retrieve" width="90" x="45" y="238">
         <parameter key="repository_entry" value="../parameters/RF_params"/>
       </operator>
-      <operator activated="true" class="set_parameters" compatibility="9.10.001" expanded="true" height="82" name="Set Parameters" width="90" x="179" y="493">
+      <operator activated="true" class="set_parameters" compatibility="9.10.001" expanded="true" height="82" name="Set Parameters" width="90" x="179" y="238">
         <list key="name_map">
           <parameter key="Random Forest" value="Random Forest"/>
         </list>
       </operator>
-      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Train Data" width="90" x="45" y="187">
+      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Train Data" width="90" x="45" y="34">
         <parameter key="process_location" value="../read_train_data"/>
         <parameter key="use_input" value="true"/>
         <parameter key="store_output" value="false"/>
@@ -29,7 +29,7 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="179" y="187">
+      <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="246" y="34">
         <parameter key="number_of_trees" value="175"/>
         <parameter key="criterion" value="gini_index"/>
         <parameter key="maximal_depth" value="12"/>
@@ -48,7 +48,7 @@
         <parameter key="local_random_seed" value="1992"/>
         <parameter key="enable_parallel_execution" value="true"/>
       </operator>
-      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Test Data" width="90" x="45" y="340">
+      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Test Data" width="90" x="45" y="136">
         <parameter key="process_location" value="../read_test_data"/>
         <parameter key="use_input" value="true"/>
         <parameter key="store_output" value="false"/>
@@ -57,11 +57,11 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="447" y="289">
+      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="447" y="136">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="103" name="Save Submission" width="90" x="581" y="289">
+      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="648" y="34">
         <process expanded="true">
           <operator activated="true" class="select_attributes" compatibility="9.10.001" expanded="true" height="82" name="Select Attributes (3)" width="90" x="246" y="34">
             <parameter key="attribute_filter_type" value="subset"/>
@@ -101,10 +101,8 @@
           <connect from_op="Write CSV" from_port="through" to_port="out 1"/>
           <portSpacing port="source_in 1" spacing="0"/>
           <portSpacing port="source_in 2" spacing="0"/>
-          <portSpacing port="source_in 3" spacing="0"/>
           <portSpacing port="sink_out 1" spacing="0"/>
           <portSpacing port="sink_out 2" spacing="0"/>
-          <portSpacing port="sink_out 3" spacing="0"/>
         </process>
       </operator>
       <connect from_op="Retrieve" from_port="output" to_op="Set Parameters" to_port="parameter set"/>
@@ -112,9 +110,8 @@
       <connect from_op="Random Forest" from_port="model" to_op="Apply Model Test" to_port="model"/>
       <connect from_op="Read Test Data" from_port="result 1" to_op="Apply Model Test" to_port="unlabelled data"/>
       <connect from_op="Apply Model Test" from_port="labelled data" to_op="Save Submission" to_port="in 1"/>
-      <connect from_op="Apply Model Test" from_port="model" to_op="Save Submission" to_port="in 2"/>
+      <connect from_op="Apply Model Test" from_port="model" to_port="result 2"/>
       <connect from_op="Save Submission" from_port="out 1" to_port="result 1"/>
-      <connect from_op="Save Submission" from_port="out 2" to_port="result 2"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>

@@ -39,7 +39,7 @@
         <parameter key="sorting_k" value="100"/>
         <parameter key="persistent" value="false"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="145" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
           <parameter key="Naive Bayes.laplace_correction" value="true,false"/>
         </list>
@@ -134,7 +134,6 @@
           <portSpacing port="sink_performance" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_output 1" spacing="0"/>
-          <portSpacing port="sink_output 2" spacing="0"/>
         </process>
       </operator>
       <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="514" y="136">
@@ -145,14 +144,12 @@
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_port="result 2"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store" to_port="input"/>
-      <connect from_op="Optimize Parameters (Grid)" from_port="output 1" to_port="result 3"/>
-      <connect from_op="Store" from_port="through" to_port="result 4"/>
+      <connect from_op="Store" from_port="through" to_port="result 3"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
-      <portSpacing port="sink_result 5" spacing="0"/>
     </process>
   </operator>
 </process>
