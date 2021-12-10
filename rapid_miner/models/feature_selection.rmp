@@ -199,7 +199,7 @@
       <operator activated="true" class="featselext:ensemble_feature_selection" compatibility="1.1.004" expanded="true" height="103" name="Ensemble-FS" width="90" x="380" y="34">
         <parameter key="ensemble_size" value="10"/>
         <parameter key="method" value="top-k"/>
-        <parameter key="k" value="10"/>
+        <parameter key="k" value="15"/>
         <parameter key="min_rounds" value="0"/>
         <parameter key="w" value="0.5"/>
         <parameter key="use_absolute_weights" value="false"/>
@@ -216,7 +216,7 @@
             <parameter key="sort_direction" value="descending"/>
             <parameter key="sets_or_ranks" value="sets"/>
             <parameter key="calculate full ranking" value="true"/>
-            <parameter key="k" value="10"/>
+            <parameter key="k" value="15"/>
             <parameter key="relevance_redundancy_relation" value="quotient"/>
             <parameter key="use_ensemble_method" value="none"/>
             <parameter key="ensemble_size" value="10"/>

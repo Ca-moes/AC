@@ -37,7 +37,7 @@
           <parameter key="SVM.kernel_gamma" value="[0.001;5;5;logarithmic]"/>
           <parameter key="SVM.kernel_degree" value="[0.001;1;5;logarithmic]"/>
         </list>
-        <parameter key="error_handling" value="fail on error"/>
+        <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>
         <parameter key="log_all_criteria" value="false"/>
         <parameter key="synchronize" value="false"/>

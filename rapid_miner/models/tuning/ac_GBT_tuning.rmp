@@ -27,7 +27,7 @@
           <parameter key="Gradient Boosted Trees.learning_rate" value="[0.001;0.5;10;logarithmic (legacy)]"/>
           <parameter key="Gradient Boosted Trees.number_of_bins" value="[2;100;10;linear]"/>
         </list>
-        <parameter key="error_handling" value="fail on error"/>
+        <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>
         <parameter key="log_all_criteria" value="false"/>
         <parameter key="synchronize" value="false"/>

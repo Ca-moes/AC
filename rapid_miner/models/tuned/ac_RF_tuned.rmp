@@ -30,15 +30,15 @@
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
       <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="246" y="34">
-        <parameter key="number_of_trees" value="175"/>
+        <parameter key="number_of_trees" value="82"/>
         <parameter key="criterion" value="gini_index"/>
-        <parameter key="maximal_depth" value="12"/>
-        <parameter key="apply_pruning" value="true"/>
+        <parameter key="maximal_depth" value="22"/>
+        <parameter key="apply_pruning" value="false"/>
         <parameter key="confidence" value="0.07749594937741684"/>
         <parameter key="apply_prepruning" value="true"/>
         <parameter key="minimal_gain" value="0.01"/>
         <parameter key="minimal_leaf_size" value="1"/>
-        <parameter key="minimal_size_for_split" value="5"/>
+        <parameter key="minimal_size_for_split" value="2"/>
         <parameter key="number_of_prepruning_alternatives" value="3"/>
         <parameter key="random_splits" value="false"/>
         <parameter key="guess_subset_ratio" value="true"/>
@@ -86,7 +86,7 @@
             <parameter key="to_attribute" value=""/>
           </operator>
           <operator activated="true" class="write_csv" compatibility="9.10.001" expanded="true" height="82" name="Write CSV" width="90" x="514" y="34">
-            <parameter key="csv_file" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/submissions/RF.csv"/>
+            <parameter key="csv_file" value="C:/Users/fmna/Documents/AC/rapid_miner/models/submissions/RF.csv"/>
             <parameter key="column_separator" value=","/>
             <parameter key="write_attribute_names" value="true"/>
             <parameter key="quote_nominal_values" value="false"/>

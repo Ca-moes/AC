@@ -26,8 +26,13 @@
           <parameter key="Random Forest.criterion" value="information_gain,gini_index,accuracy"/>
           <parameter key="Random Forest.number_of_trees" value="[10;250;10;linear]"/>
           <parameter key="Random Forest.maximal_depth" value="[10;30;5;linear]"/>
+          <parameter key="Random Forest.apply_prepruning" value="true,false"/>
+          <parameter key="Random Forest.apply_pruning" value="true,false"/>
+          <parameter key="Random Forest.enable_parallel_execution" value="true"/>
+          <parameter key="Random Forest.minimal_leaf_size" value="1,2,4"/>
+          <parameter key="Random Forest.minimal_size_for_split" value="2,5,10"/>
         </list>
-        <parameter key="error_handling" value="fail on error"/>
+        <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>
         <parameter key="log_all_criteria" value="false"/>
         <parameter key="synchronize" value="false"/>
@@ -38,11 +43,11 @@
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="5"/>
             <parameter key="sampling_type" value="stratified sampling"/>
-            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="use_local_random_seed" value="true"/>
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="false" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Feature Selection" width="90" x="112" y="85">
+              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Feature Selection" width="90" x="112" y="34">
                 <parameter key="process_location" value="../feature_selection"/>
                 <parameter key="use_input" value="true"/>
                 <parameter key="store_output" value="false"/>
@@ -81,7 +86,8 @@
                 <parameter key="local_random_seed" value="2001"/>
                 <parameter key="enable_parallel_execution" value="true"/>
               </operator>
-              <connect from_port="training set" to_op="SMOTE Upsampling" to_port="exa"/>
+              <connect from_port="training set" to_op="Feature Selection" to_port="input 1"/>
+              <connect from_op="Feature Selection" from_port="result 1" to_op="SMOTE Upsampling" to_port="exa"/>
               <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Random Forest" to_port="training set"/>
               <connect from_op="Random Forest" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
@@ -182,6 +188,7 @@
       <description align="center" color="yellow" colored="false" height="112" resized="true" width="240" x="32" y="251">normal&lt;br&gt;n_trees: 1-250&lt;br&gt;criterion: all except least_square and gain_ratio (it is consistently bad)&lt;br&gt;max_depth: 1-30</description>
       <description align="center" color="yellow" colored="false" height="75" resized="true" width="150" x="310" y="252">with pruning&lt;br/&gt;confidence: 0.001-0.5</description>
       <description align="center" color="yellow" colored="false" height="94" resized="true" width="186" x="485" y="253">with prepruning&lt;br/&gt;min_gain 0.001-10&lt;br/&gt;min_leaf_size: 1-10</description>
+      <description align="center" color="yellow" colored="false" height="82" resized="true" width="174" x="384" y="367">pruning e prepruning ajudam</description>
     </process>
   </operator>
 </process>
