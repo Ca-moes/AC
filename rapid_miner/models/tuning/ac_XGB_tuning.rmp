@@ -21,16 +21,16 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="380" y="34">
         <list key="parameters">
-          <parameter key="Random Forest.criterion" value="information_gain,gini_index,accuracy"/>
-          <parameter key="Random Forest.number_of_trees" value="[10;250;10;linear]"/>
-          <parameter key="Random Forest.maximal_depth" value="[10;30;5;linear]"/>
-          <parameter key="Random Forest.apply_prepruning" value="true,false"/>
-          <parameter key="Random Forest.apply_pruning" value="true,false"/>
-          <parameter key="Random Forest.enable_parallel_execution" value="true"/>
-          <parameter key="Random Forest.minimal_leaf_size" value="1,2,4"/>
-          <parameter key="Random Forest.minimal_size_for_split" value="2,5,10"/>
+          <parameter key="XGBoost.rounds" value="[1.0;50;5;linear]"/>
+          <parameter key="XGBoost.booster" value="tree booster,linear booster,DART"/>
+          <parameter key="XGBoost.top_k" value="15"/>
+          <parameter key="XGBoost.feature_selector" value="cyclic,shuffle,thrifty"/>
+          <parameter key="XGBoost.updater" value="shotgun,coord_descent"/>
+          <parameter key="XGBoost.learning_rate" value="[0.0;1.0;10;quadratic]"/>
+          <parameter key="XGBoost.normalize_type" value="tree,forest"/>
+          <parameter key="XGBoost.sample_type" value="uniform,weighted"/>
         </list>
         <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>
@@ -38,7 +38,7 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="112" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="5"/>
@@ -47,7 +47,7 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Feature Selection" width="90" x="112" y="34">
+              <operator activated="false" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Feature Selection" width="90" x="112" y="238">
                 <parameter key="process_location" value="../feature_selection"/>
                 <parameter key="use_input" value="true"/>
                 <parameter key="store_output" value="false"/>
@@ -56,7 +56,7 @@
                 <list key="macros"/>
                 <parameter key="fail_for_unknown_macros" value="true"/>
               </operator>
-              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="246" y="34">
+              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="112" y="34">
                 <parameter key="number_of_neighbours" value="5"/>
                 <parameter key="normalize" value="true"/>
                 <parameter key="equalize_classes" value="true"/>
@@ -67,33 +67,35 @@
                 <parameter key="use_local_random_seed" value="false"/>
                 <parameter key="local_random_seed" value="1992"/>
               </operator>
-              <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="380" y="34">
-                <parameter key="number_of_trees" value="100"/>
-                <parameter key="criterion" value="gain_ratio"/>
-                <parameter key="maximal_depth" value="50"/>
-                <parameter key="apply_pruning" value="false"/>
-                <parameter key="confidence" value="0.1"/>
-                <parameter key="apply_prepruning" value="true"/>
-                <parameter key="minimal_gain" value="0.01"/>
-                <parameter key="minimal_leaf_size" value="2"/>
-                <parameter key="minimal_size_for_split" value="4"/>
-                <parameter key="number_of_prepruning_alternatives" value="3"/>
-                <parameter key="random_splits" value="false"/>
-                <parameter key="guess_subset_ratio" value="true"/>
-                <parameter key="subset_ratio" value="0.2"/>
-                <parameter key="voting_strategy" value="confidence vote"/>
-                <parameter key="use_local_random_seed" value="true"/>
-                <parameter key="local_random_seed" value="2001"/>
-                <parameter key="enable_parallel_execution" value="true"/>
+              <operator activated="true" class="xgboost:xgboost" compatibility="0.1.001" expanded="true" height="82" name="XGBoost" width="90" x="313" y="34">
+                <parameter key="booster" value="tree booster"/>
+                <parameter key="rounds" value="25"/>
+                <parameter key="early_stopping" value="none"/>
+                <parameter key="early_stopping_rounds" value="10"/>
+                <parameter key="learning_rate" value="0.3"/>
+                <parameter key="min_split_loss" value="0.0"/>
+                <parameter key="max_depth" value="6"/>
+                <parameter key="min_child_weight" value="1.0"/>
+                <parameter key="subsample" value="1.0"/>
+                <parameter key="tree_method" value="auto"/>
+                <parameter key="lambda" value="1.0"/>
+                <parameter key="alpha" value="0.0"/>
+                <parameter key="sample_type" value="uniform"/>
+                <parameter key="normalize_type" value="tree"/>
+                <parameter key="rate_drop" value="0.0"/>
+                <parameter key="skip_drop" value="0.0"/>
+                <parameter key="updater" value="shotgun"/>
+                <parameter key="feature_selector" value="cyclic"/>
+                <parameter key="top_k" value="0"/>
+                <enumeration key="expert_parameters"/>
               </operator>
-              <connect from_port="training set" to_op="Feature Selection" to_port="input 1"/>
-              <connect from_op="Feature Selection" from_port="result 1" to_op="SMOTE Upsampling" to_port="exa"/>
-              <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Random Forest" to_port="training set"/>
-              <connect from_op="Random Forest" from_port="model" to_port="model"/>
+              <connect from_port="training set" to_op="SMOTE Upsampling" to_port="exa"/>
+              <connect from_op="SMOTE Upsampling" from_port="ups" to_op="XGBoost" to_port="training set"/>
+              <connect from_op="XGBoost" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
               <portSpacing port="sink_model" spacing="0"/>
               <portSpacing port="sink_through 1" spacing="0"/>
-              <description align="left" color="green" colored="true" height="80" resized="false" width="248" x="52" y="196">In the training phase, a model is built on the current training data set. (90 % of data by default, 10 times)</description>
+              <description align="center" color="yellow" colored="false" height="51" resized="true" width="180" x="260" y="256">XGBoost already applies FS</description>
             </process>
             <process expanded="true">
               <operator activated="true" class="apply_model" compatibility="7.1.001" expanded="true" height="82" name="Apply Model" origin="GENERATED_COMMUNITY" width="90" x="112" y="34">
@@ -138,23 +140,23 @@
               <portSpacing port="sink_test set results" spacing="0"/>
               <portSpacing port="sink_performance 1" spacing="0"/>
               <portSpacing port="sink_performance 2" spacing="0"/>
-              <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
-          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="581" y="136">
-            <parameter key="filename" value="C:/Users/fmna/Documents/AC/rapid_miner/models/logs/RF_cross.log"/>
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="514" y="187">
+            <parameter key="filename" value="C:/Users/fmna/Documents/AC/rapid_miner/models/logs/XGB_cross.log"/>
             <list key="log">
               <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
               <parameter key="Execution Time" value="operator.Cross Validation.value.time"/>
-              <parameter key="n_trees" value="operator.Random Forest.parameter.number_of_trees"/>
-              <parameter key="max_depth" value="operator.Random Forest.parameter.maximal_depth"/>
-              <parameter key="criterion" value="operator.Random Forest.parameter.criterion"/>
-              <parameter key="pruning" value="operator.Random Forest.parameter.apply_pruning"/>
-              <parameter key="confidence" value="operator.Random Forest.parameter.confidence"/>
-              <parameter key="pre prunning" value="operator.Random Forest.parameter.apply_prepruning"/>
-              <parameter key="min gain" value="operator.Random Forest.parameter.minimal_gain"/>
-              <parameter key="min leaf size" value="operator.Random Forest.parameter.minimal_leaf_size"/>
-              <parameter key="AUC" value="operator.Cross Validation.value.performance main criterion"/>
+              <parameter key="rounds" value="operator.XGBoost.parameter.rounds"/>
+              <parameter key="booster" value="operator.XGBoost.parameter.booster"/>
+              <parameter key="sample_type" value="operator.XGBoost.parameter.sample_type"/>
+              <parameter key="normalize_type" value="operator.XGBoost.parameter.normalize_type"/>
+              <parameter key="learning_type" value="operator.XGBoost.parameter.learning_rate"/>
+              <parameter key="max_depth" value="operator.XGBoost.parameter.max_depth"/>
+              <parameter key="feature_selector" value="operator.XGBoost.parameter.feature_selector"/>
+              <parameter key="top_k" value="operator.XGBoost.parameter.top_k"/>
+              <parameter key="updater" value="operator.XGBoost.parameter.updater"/>
+              <parameter key="AUC" value="operator.Performance.parameter.AUC"/>
             </list>
             <parameter key="sorting_type" value="none"/>
             <parameter key="sorting_dimension" value="Iteration"/>
@@ -172,8 +174,17 @@
           <portSpacing port="sink_output 1" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="581" y="136">
-        <parameter key="repository_entry" value="../parameters/RF_params"/>
+      <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="68" name="Optimize Parameters Log" width="90" x="514" y="238">
+        <parameter key="filename" value="C:/Users/andre/work/MIEIC_4a1s/AC/rapid_miner/models/logs/GBT_optimize.log"/>
+        <list key="log">
+          <parameter key="Execution Time (ms)" value="operator.Optimize Parameters (Grid).value.time"/>
+        </list>
+        <parameter key="sorting_type" value="none"/>
+        <parameter key="sorting_k" value="100"/>
+        <parameter key="persistent" value="false"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="648" y="136">
+        <parameter key="repository_entry" value="../parameters/XGB_params"/>
       </operator>
       <connect from_op="Read Train Data" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
@@ -185,10 +196,9 @@
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
-      <description align="center" color="yellow" colored="false" height="112" resized="true" width="240" x="32" y="251">normal&lt;br&gt;n_trees: 1-250&lt;br&gt;criterion: all except least_square and gain_ratio (it is consistently bad)&lt;br&gt;max_depth: 1-30</description>
-      <description align="center" color="yellow" colored="false" height="75" resized="true" width="150" x="310" y="252">with pruning&lt;br/&gt;confidence: 0.001-0.5</description>
-      <description align="center" color="yellow" colored="false" height="94" resized="true" width="186" x="485" y="253">with prepruning&lt;br/&gt;min_gain 0.001-10&lt;br/&gt;min_leaf_size: 1-10</description>
-      <description align="center" color="yellow" colored="false" height="82" resized="true" width="174" x="384" y="367">pruning e prepruning ajudam</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="101" y="375">updater: shotgun s&amp;#243; funciona com FS cyclic e outro</description>
+      <description align="center" color="yellow" colored="false" height="99" resized="true" width="231" x="319" y="374">Maus parametros aka nao meter:&lt;br&gt;FS: greedy&lt;br&gt;booster: linear&lt;br/&gt;max_depth piorou&lt;br&gt;</description>
+      <description align="center" color="yellow" colored="false" height="105" resized="false" width="180" x="591" y="366">sample_type&lt;br/&gt;normalize_type&lt;br/&gt;n&amp;#227;o fazem diferen&amp;#231;a</description>
     </process>
   </operator>
 </process>
