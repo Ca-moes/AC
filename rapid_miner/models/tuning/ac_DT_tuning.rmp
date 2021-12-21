@@ -24,8 +24,11 @@
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="246" y="238">
         <list key="parameters">
           <parameter key="Decision Tree.criterion" value="information_gain,gini_index,accuracy"/>
+          <parameter key="Decision Tree.maximal_depth" value="[10;50;10;linear]"/>
+          <parameter key="Decision Tree.apply_prepruning" value="true,false"/>
+          <parameter key="Decision Tree.confidence" value="[0.001;0.5;10;linear]"/>
         </list>
-        <parameter key="error_handling" value="fail on error"/>
+        <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>
         <parameter key="log_all_criteria" value="false"/>
         <parameter key="synchronize" value="false"/>

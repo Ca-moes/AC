@@ -29,8 +29,8 @@
           <parameter key="XGBoost.feature_selector" value="cyclic,shuffle,thrifty"/>
           <parameter key="XGBoost.updater" value="shotgun,coord_descent"/>
           <parameter key="XGBoost.learning_rate" value="[0.0;1.0;10;quadratic]"/>
-          <parameter key="XGBoost.normalize_type" value="tree,forest"/>
-          <parameter key="XGBoost.sample_type" value="uniform,weighted"/>
+          <parameter key="XGBoost.normalize_type" value="tree"/>
+          <parameter key="XGBoost.sample_type" value="weighted,uniform"/>
         </list>
         <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>

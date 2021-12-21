@@ -12,17 +12,8 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Train Data" width="90" x="45" y="34">
+      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Read Train Data" width="90" x="112" y="34">
         <parameter key="process_location" value="../read_train_data"/>
-        <parameter key="use_input" value="true"/>
-        <parameter key="store_output" value="false"/>
-        <parameter key="propagate_metadata_recursively" value="true"/>
-        <parameter key="cache_process" value="true"/>
-        <list key="macros"/>
-        <parameter key="fail_for_unknown_macros" value="true"/>
-      </operator>
-      <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="68" name="Execute encoding" width="90" x="179" y="34">
-        <parameter key="process_location" value="../encoding"/>
         <parameter key="use_input" value="true"/>
         <parameter key="store_output" value="false"/>
         <parameter key="propagate_metadata_recursively" value="true"/>
@@ -32,11 +23,9 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.001" expanded="true" height="124" name="Optimize Parameters (Grid)" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
         <list key="parameters">
-          <parameter key="Naive Bayes (Kernel).number_of_kernels" value="[1.0;100.0;10;linear]"/>
-          <parameter key="Naive Bayes (Kernel).estimation_mode" value="full,greedy"/>
-          <parameter key="Naive Bayes (Kernel).laplace_correction" value="true,false"/>
-          <parameter key="Naive Bayes (Kernel).bandwidth_selection" value="heuristic,fix"/>
-          <parameter key="Naive Bayes (Kernel).bandwidth" value="[0.01;100;10;linear]"/>
+          <parameter key="Deep Learning.activation" value="Tanh,TanhWithDropout,Rectifier,RectifierWithDropout"/>
+          <parameter key="Deep Learning.rho" value="[0.0;1;5;quadratic]"/>
+          <parameter key="Deep Learning.epsilon" value="[1e-3;10;10;quadratic]"/>
         </list>
         <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>
@@ -44,12 +33,12 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="179" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="8.2.000" expanded="true" height="145" name="Cross Validation" origin="GENERATED_COMMUNITY" width="90" x="313" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="5"/>
             <parameter key="sampling_type" value="stratified sampling"/>
-            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="use_local_random_seed" value="true"/>
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
@@ -73,20 +62,48 @@
                 <parameter key="use_local_random_seed" value="false"/>
                 <parameter key="local_random_seed" value="1992"/>
               </operator>
-              <operator activated="true" class="naive_bayes_kernel" compatibility="9.10.001" expanded="true" height="82" name="Naive Bayes (Kernel)" width="90" x="313" y="34">
-                <parameter key="laplace_correction" value="true"/>
-                <parameter key="estimation_mode" value="greedy"/>
-                <parameter key="bandwidth_selection" value="heuristic"/>
-                <parameter key="bandwidth" value="0.1"/>
-                <parameter key="minimum_bandwidth" value="0.1"/>
-                <parameter key="number_of_kernels" value="10"/>
-                <parameter key="use_application_grid" value="false"/>
-                <parameter key="application_grid_size" value="200"/>
+              <operator activated="true" class="h2o:deep_learning" compatibility="9.10.001" expanded="true" height="103" name="Deep Learning" width="90" x="313" y="34">
+                <parameter key="activation" value="Rectifier"/>
+                <enumeration key="hidden_layer_sizes">
+                  <parameter key="hidden_layer_sizes" value="50"/>
+                  <parameter key="hidden_layer_sizes" value="50"/>
+                </enumeration>
+                <enumeration key="hidden_dropout_ratios"/>
+                <parameter key="reproducible_(uses_1_thread)" value="false"/>
+                <parameter key="use_local_random_seed" value="false"/>
+                <parameter key="local_random_seed" value="1992"/>
+                <parameter key="epochs" value="10.0"/>
+                <parameter key="compute_variable_importances" value="false"/>
+                <parameter key="train_samples_per_iteration" value="-2"/>
+                <parameter key="adaptive_rate" value="true"/>
+                <parameter key="epsilon" value="1.0E-8"/>
+                <parameter key="rho" value="0.99"/>
+                <parameter key="learning_rate" value="0.005"/>
+                <parameter key="learning_rate_annealing" value="1.0E-6"/>
+                <parameter key="learning_rate_decay" value="1.0"/>
+                <parameter key="momentum_start" value="0.0"/>
+                <parameter key="momentum_ramp" value="1000000.0"/>
+                <parameter key="momentum_stable" value="0.0"/>
+                <parameter key="nesterov_accelerated_gradient" value="true"/>
+                <parameter key="standardize" value="true"/>
+                <parameter key="L1" value="1.0E-5"/>
+                <parameter key="L2" value="0.0"/>
+                <parameter key="max_w2" value="10.0"/>
+                <parameter key="loss_function" value="Automatic"/>
+                <parameter key="distribution_function" value="AUTO"/>
+                <parameter key="early_stopping" value="false"/>
+                <parameter key="stopping_rounds" value="1"/>
+                <parameter key="stopping_metric" value="AUTO"/>
+                <parameter key="stopping_tolerance" value="0.001"/>
+                <parameter key="missing_values_handling" value="MeanImputation"/>
+                <parameter key="max_runtime_seconds" value="0"/>
+                <list key="expert_parameters"/>
+                <list key="expert_parameters_"/>
               </operator>
               <connect from_port="training set" to_op="Feature Selection" to_port="input 1"/>
               <connect from_op="Feature Selection" from_port="result 1" to_op="SMOTE Upsampling" to_port="exa"/>
-              <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Naive Bayes (Kernel)" to_port="training set"/>
-              <connect from_op="Naive Bayes (Kernel)" from_port="model" to_port="model"/>
+              <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Deep Learning" to_port="training set"/>
+              <connect from_op="Deep Learning" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
               <portSpacing port="sink_model" spacing="0"/>
               <portSpacing port="sink_through 1" spacing="0"/>
@@ -138,9 +155,25 @@
               <description align="left" color="blue" colored="true" height="103" resized="false" width="315" x="73" y="176">The model created in the Training step is applied to the current test set (10 %).&lt;br/&gt;The performance is evaluated and sent to the operator results.</description>
             </process>
           </operator>
+          <operator activated="true" class="log" compatibility="9.10.001" expanded="true" height="82" name="Cross Validation Log" width="90" x="581" y="136">
+            <parameter key="filename" value="C:/Users/fmna/Documents/AC/rapid_miner/models/logs/RF_cross.log"/>
+            <list key="log">
+              <parameter key="Iteration" value="operator.Cross Validation.value.applycount"/>
+              <parameter key="Execution Time" value="operator.Cross Validation.value.time"/>
+              <parameter key="AUC" value="operator.Cross Validation.value.performance main criterion"/>
+              <parameter key="activation" value="operator.Deep Learning.parameter.activation"/>
+              <parameter key="epsilon" value="operator.Deep Learning.parameter.epsilon"/>
+              <parameter key="rho" value="operator.Deep Learning.parameter.rho"/>
+            </list>
+            <parameter key="sorting_type" value="none"/>
+            <parameter key="sorting_dimension" value="Iteration"/>
+            <parameter key="sorting_k" value="100"/>
+            <parameter key="persistent" value="false"/>
+          </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
-          <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
+          <connect from_op="Cross Validation" from_port="performance 1" to_op="Cross Validation Log" to_port="through 1"/>
+          <connect from_op="Cross Validation Log" from_port="through 1" to_port="performance"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
@@ -148,11 +181,10 @@
           <portSpacing port="sink_output 1" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="514" y="136">
-        <parameter key="repository_entry" value="../parameters/NBK_params"/>
+      <operator activated="true" class="store" compatibility="9.10.001" expanded="true" height="68" name="Store" width="90" x="581" y="136">
+        <parameter key="repository_entry" value="../parameters/DL_params"/>
       </operator>
-      <connect from_op="Read Train Data" from_port="result 1" to_op="Execute encoding" to_port="input 1"/>
-      <connect from_op="Execute encoding" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
+      <connect from_op="Read Train Data" from_port="result 1" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_port="result 1"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_port="result 2"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store" to_port="input"/>
