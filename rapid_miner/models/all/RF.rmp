@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.10.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.10.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="retrieve" compatibility="9.10.001" expanded="true" height="68" name="Retrieve" width="90" x="313" y="187">
+        <parameter key="repository_entry" value="../parameters/RF_params"/>
+      </operator>
+      <operator activated="true" class="set_parameters" compatibility="9.10.001" expanded="true" height="82" name="Set Parameters" width="90" x="447" y="187">
+        <list key="name_map">
+          <parameter key="Random Forest" value="Random Forest"/>
+        </list>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.10.001" expanded="true" height="103" name="Random Forest" width="90" x="380" y="34">
+        <parameter key="number_of_trees" value="82"/>
+        <parameter key="criterion" value="gini_index"/>
+        <parameter key="maximal_depth" value="22"/>
+        <parameter key="apply_pruning" value="false"/>
+        <parameter key="confidence" value="0.07749594937741684"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="1"/>
+        <parameter key="minimal_size_for_split" value="2"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+        <parameter key="random_splits" value="false"/>
+        <parameter key="guess_subset_ratio" value="true"/>
+        <parameter key="subset_ratio" value="0.2"/>
+        <parameter key="voting_strategy" value="confidence vote"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="enable_parallel_execution" value="true"/>
+      </operator>
+      <connect from_port="input 1" to_op="Random Forest" to_port="training set"/>
+      <connect from_op="Retrieve" from_port="output" to_op="Set Parameters" to_port="parameter set"/>
+      <connect from_op="Random Forest" from_port="model" to_port="result 1"/>
+      <connect from_op="Random Forest" from_port="exampleSet" to_port="result 2"/>
+      <connect from_op="Random Forest" from_port="weights" to_port="result 3"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="source_input 2" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+    </process>
+  </operator>
+</process>

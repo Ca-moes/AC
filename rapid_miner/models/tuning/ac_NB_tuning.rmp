@@ -43,7 +43,7 @@
         <list key="parameters">
           <parameter key="Naive Bayes.laplace_correction" value="true,false"/>
         </list>
-        <parameter key="error_handling" value="fail on error"/>
+        <parameter key="error_handling" value="ignore error"/>
         <parameter key="log_performance" value="true"/>
         <parameter key="log_all_criteria" value="false"/>
         <parameter key="synchronize" value="false"/>
@@ -58,10 +58,32 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="naive_bayes" compatibility="9.10.001" expanded="true" height="82" name="Naive Bayes" width="90" x="179" y="34">
+              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Feature Selection" width="90" x="45" y="34">
+                <parameter key="process_location" value="../feature_selection"/>
+                <parameter key="use_input" value="true"/>
+                <parameter key="store_output" value="false"/>
+                <parameter key="propagate_metadata_recursively" value="true"/>
+                <parameter key="cache_process" value="true"/>
+                <list key="macros"/>
+                <parameter key="fail_for_unknown_macros" value="true"/>
+              </operator>
+              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="179" y="34">
+                <parameter key="number_of_neighbours" value="5"/>
+                <parameter key="normalize" value="true"/>
+                <parameter key="equalize_classes" value="true"/>
+                <parameter key="upsampling_size" value="1000"/>
+                <parameter key="auto_detect_minority_class" value="true"/>
+                <parameter key="round_integers" value="true"/>
+                <parameter key="nominal_change_rate" value="0.5"/>
+                <parameter key="use_local_random_seed" value="false"/>
+                <parameter key="local_random_seed" value="1992"/>
+              </operator>
+              <operator activated="true" class="naive_bayes" compatibility="9.10.001" expanded="true" height="82" name="Naive Bayes" width="90" x="313" y="34">
                 <parameter key="laplace_correction" value="true"/>
               </operator>
-              <connect from_port="training set" to_op="Naive Bayes" to_port="training set"/>
+              <connect from_port="training set" to_op="Feature Selection" to_port="input 1"/>
+              <connect from_op="Feature Selection" from_port="result 1" to_op="SMOTE Upsampling" to_port="exa"/>
+              <connect from_op="SMOTE Upsampling" from_port="ups" to_op="Naive Bayes" to_port="training set"/>
               <connect from_op="Naive Bayes" from_port="model" to_port="model"/>
               <portSpacing port="source_training set" spacing="0"/>
               <portSpacing port="sink_model" spacing="0"/>

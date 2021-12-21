@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.10.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.10.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="retrieve" compatibility="9.10.001" expanded="true" height="68" name="Retrieve" width="90" x="313" y="187">
+        <parameter key="repository_entry" value="../parameters/DL_params"/>
+      </operator>
+      <operator activated="true" class="set_parameters" compatibility="9.10.001" expanded="true" height="82" name="Set Parameters" width="90" x="447" y="187">
+        <list key="name_map">
+          <parameter key="Deep Learning" value="Deep Learning"/>
+        </list>
+      </operator>
+      <operator activated="true" class="h2o:deep_learning" compatibility="9.10.001" expanded="true" height="103" name="Deep Learning" width="90" x="380" y="34">
+        <parameter key="activation" value="Rectifier"/>
+        <enumeration key="hidden_layer_sizes">
+          <parameter key="hidden_layer_sizes" value="50"/>
+          <parameter key="hidden_layer_sizes" value="50"/>
+        </enumeration>
+        <enumeration key="hidden_dropout_ratios"/>
+        <parameter key="reproducible_(uses_1_thread)" value="false"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="epochs" value="10.0"/>
+        <parameter key="compute_variable_importances" value="true"/>
+        <parameter key="train_samples_per_iteration" value="-2"/>
+        <parameter key="adaptive_rate" value="true"/>
+        <parameter key="epsilon" value="1.0E-8"/>
+        <parameter key="rho" value="0.99"/>
+        <parameter key="learning_rate" value="0.005"/>
+        <parameter key="learning_rate_annealing" value="1.0E-6"/>
+        <parameter key="learning_rate_decay" value="1.0"/>
+        <parameter key="momentum_start" value="0.0"/>
+        <parameter key="momentum_ramp" value="1000000.0"/>
+        <parameter key="momentum_stable" value="0.0"/>
+        <parameter key="nesterov_accelerated_gradient" value="true"/>
+        <parameter key="standardize" value="true"/>
+        <parameter key="L1" value="1.0E-5"/>
+        <parameter key="L2" value="0.0"/>
+        <parameter key="max_w2" value="10.0"/>
+        <parameter key="loss_function" value="Automatic"/>
+        <parameter key="distribution_function" value="AUTO"/>
+        <parameter key="early_stopping" value="false"/>
+        <parameter key="stopping_rounds" value="1"/>
+        <parameter key="stopping_metric" value="AUTO"/>
+        <parameter key="stopping_tolerance" value="0.001"/>
+        <parameter key="missing_values_handling" value="MeanImputation"/>
+        <parameter key="max_runtime_seconds" value="0"/>
+        <list key="expert_parameters"/>
+        <list key="expert_parameters_"/>
+      </operator>
+      <connect from_port="input 1" to_op="Deep Learning" to_port="training set"/>
+      <connect from_op="Retrieve" from_port="output" to_op="Set Parameters" to_port="parameter set"/>
+      <connect from_op="Deep Learning" from_port="model" to_port="result 1"/>
+      <connect from_op="Deep Learning" from_port="exampleSet" to_port="result 2"/>
+      <connect from_op="Deep Learning" from_port="weights" to_port="result 3"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="source_input 2" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+    </process>
+  </operator>
+</process>

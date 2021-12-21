@@ -26,8 +26,8 @@
           <parameter key="Random Forest.criterion" value="information_gain,gini_index,accuracy"/>
           <parameter key="Random Forest.number_of_trees" value="[10;250;10;linear]"/>
           <parameter key="Random Forest.maximal_depth" value="[10;30;5;linear]"/>
-          <parameter key="Random Forest.apply_prepruning" value="true,false"/>
-          <parameter key="Random Forest.apply_pruning" value="true,false"/>
+          <parameter key="Random Forest.apply_prepruning" value="true"/>
+          <parameter key="Random Forest.apply_pruning" value="true"/>
           <parameter key="Random Forest.enable_parallel_execution" value="true"/>
           <parameter key="Random Forest.minimal_leaf_size" value="1,2,4"/>
           <parameter key="Random Forest.minimal_size_for_split" value="2,5,10"/>
@@ -47,7 +47,7 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Feature Selection" width="90" x="112" y="34">
+              <operator activated="true" class="productivity:execute_process" compatibility="9.10.001" expanded="true" height="82" name="Feature Selection" width="90" x="45" y="34">
                 <parameter key="process_location" value="../feature_selection"/>
                 <parameter key="use_input" value="true"/>
                 <parameter key="store_output" value="false"/>
@@ -56,7 +56,7 @@
                 <list key="macros"/>
                 <parameter key="fail_for_unknown_macros" value="true"/>
               </operator>
-              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="246" y="34">
+              <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="179" y="34">
                 <parameter key="number_of_neighbours" value="5"/>
                 <parameter key="normalize" value="true"/>
                 <parameter key="equalize_classes" value="true"/>
