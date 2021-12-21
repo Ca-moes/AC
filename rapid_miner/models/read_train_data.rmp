@@ -13,10 +13,10 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="read_csv" compatibility="9.10.001" expanded="true" height="68" name="Read Train" width="90" x="45" y="34">
-        <parameter key="csv_file" value="C:\Users\fmna\Documents\AC\train_data.csv"/>
+        <parameter key="csv_file" value="C:\Users\andre\work\MIEIC_4a1s\AC\train_data.csv"/>
         <parameter key="column_separators" value=","/>
         <parameter key="trim_lines" value="false"/>
-        <parameter key="use_quotes" value="false"/>
+        <parameter key="use_quotes" value="true"/>
         <parameter key="quotes_character" value="&quot;"/>
         <parameter key="escape_character" value="\"/>
         <parameter key="skip_comments" value="true"/>
