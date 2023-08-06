@@ -57,11 +57,38 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
+      <operator activated="true" class="support_vector_machine" compatibility="9.10.001" expanded="true" height="124" name="SVM" width="90" x="313" y="34">
+        <parameter key="kernel_type" value="radial"/>
+        <parameter key="kernel_gamma" value="0.001"/>
+        <parameter key="kernel_sigma1" value="1.0"/>
+        <parameter key="kernel_sigma2" value="0.0"/>
+        <parameter key="kernel_sigma3" value="2.0"/>
+        <parameter key="kernel_shift" value="1.0"/>
+        <parameter key="kernel_degree" value="0.0039810717055349725"/>
+        <parameter key="kernel_a" value="1.0"/>
+        <parameter key="kernel_b" value="0.0"/>
+        <parameter key="kernel_cache" value="200"/>
+        <parameter key="C" value="1.0"/>
+        <parameter key="convergence_epsilon" value="0.001"/>
+        <parameter key="max_iterations" value="100000"/>
+        <parameter key="scale" value="true"/>
+        <parameter key="calculate_weights" value="true"/>
+        <parameter key="return_optimization_performance" value="true"/>
+        <parameter key="L_pos" value="1.0"/>
+        <parameter key="L_neg" value="1.0"/>
+        <parameter key="epsilon" value="0.0"/>
+        <parameter key="epsilon_plus" value="0.0"/>
+        <parameter key="epsilon_minus" value="0.0"/>
+        <parameter key="balance_cost" value="false"/>
+        <parameter key="quadratic_loss_pos" value="false"/>
+        <parameter key="quadratic_loss_neg" value="false"/>
+        <parameter key="estimate_performance" value="false"/>
+      </operator>
       <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="514" y="136">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="715" y="34">
+      <operator activated="false" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="715" y="34">
         <process expanded="true">
           <operator activated="true" class="select_attributes" compatibility="9.10.001" expanded="true" height="82" name="Select Attributes (3)" width="90" x="246" y="34">
             <parameter key="attribute_filter_type" value="subset"/>
@@ -110,9 +137,9 @@
       <connect from_op="SVM" from_port="result 1" to_op="Apply Model Test" to_port="model"/>
       <connect from_op="Read Test Data" from_port="result 1" to_op="Execute encoding" to_port="input 1"/>
       <connect from_op="Execute encoding" from_port="result 1" to_op="Apply Model Test" to_port="unlabelled data"/>
-      <connect from_op="Apply Model Test" from_port="labelled data" to_op="Save Submission" to_port="in 1"/>
+      <connect from_op="SVM" from_port="model" to_op="Apply Model Test" to_port="model"/>
+      <connect from_op="Apply Model Test" from_port="labelled data" to_port="result 1"/>
       <connect from_op="Apply Model Test" from_port="model" to_port="result 2"/>
-      <connect from_op="Save Submission" from_port="out 1" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>

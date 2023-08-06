@@ -39,11 +39,85 @@
         <list key="macros"/>
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
-      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="447" y="136">
+      <operator activated="true" class="split_data" compatibility="9.10.001" expanded="true" height="103" name="Split Data" width="90" x="179" y="136">
+        <enumeration key="partitions">
+          <parameter key="ratio" value="0.9"/>
+          <parameter key="ratio" value="0.1"/>
+        </enumeration>
+        <parameter key="sampling_type" value="stratified sampling"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="operator_toolbox:smote" compatibility="2.12.000" expanded="true" height="82" name="SMOTE Upsampling" width="90" x="313" y="34">
+        <parameter key="number_of_neighbours" value="5"/>
+        <parameter key="normalize" value="true"/>
+        <parameter key="equalize_classes" value="true"/>
+        <parameter key="upsampling_size" value="1000"/>
+        <parameter key="auto_detect_minority_class" value="true"/>
+        <parameter key="round_integers" value="true"/>
+        <parameter key="nominal_change_rate" value="0.5"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.10.001" expanded="true" height="103" name="Decision Tree Train" width="90" x="447" y="34">
+        <parameter key="criterion" value="gini_index"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.2402"/>
+        <parameter key="apply_prepruning" value="false"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="11"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Validation" width="90" x="447" y="187">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="648" y="34">
+      <operator activated="true" class="performance_binominal_classification" compatibility="9.10.001" expanded="true" height="82" name="Performance" width="90" x="648" y="85">
+        <parameter key="manually_set_positive_class" value="true"/>
+        <parameter key="positive_class" value="No"/>
+        <parameter key="main_criterion" value="first"/>
+        <parameter key="accuracy" value="true"/>
+        <parameter key="classification_error" value="true"/>
+        <parameter key="kappa" value="false"/>
+        <parameter key="AUC (optimistic)" value="true"/>
+        <parameter key="AUC" value="true"/>
+        <parameter key="AUC (pessimistic)" value="true"/>
+        <parameter key="precision" value="true"/>
+        <parameter key="recall" value="true"/>
+        <parameter key="lift" value="false"/>
+        <parameter key="fallout" value="false"/>
+        <parameter key="f_measure" value="true"/>
+        <parameter key="false_positive" value="false"/>
+        <parameter key="false_negative" value="false"/>
+        <parameter key="true_positive" value="false"/>
+        <parameter key="true_negative" value="false"/>
+        <parameter key="sensitivity" value="false"/>
+        <parameter key="specificity" value="false"/>
+        <parameter key="youden" value="false"/>
+        <parameter key="positive_predictive_value" value="false"/>
+        <parameter key="negative_predictive_value" value="false"/>
+        <parameter key="psep" value="false"/>
+        <parameter key="skip_undefined_labels" value="true"/>
+        <parameter key="use_example_weights" value="true"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.10.001" expanded="true" height="103" name="Decision Tree Test" width="90" x="246" y="340">
+        <parameter key="criterion" value="gini_index"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.2402"/>
+        <parameter key="apply_prepruning" value="false"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="11"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.10.001" expanded="true" height="82" name="Apply Model Test" width="90" x="447" y="442">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="648" y="238">
         <process expanded="true">
           <operator activated="true" class="select_attributes" compatibility="9.10.001" expanded="true" height="82" name="Select Id and Prediction" width="90" x="313" y="34">
             <parameter key="attribute_filter_type" value="subset"/>

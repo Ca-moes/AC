@@ -43,7 +43,7 @@
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="648" y="34">
+      <operator activated="false" class="subprocess" compatibility="9.10.001" expanded="true" height="82" name="Save Submission" width="90" x="648" y="34">
         <process expanded="true">
           <operator activated="true" class="select_attributes" compatibility="9.10.001" expanded="true" height="82" name="Select Attributes (3)" width="90" x="246" y="34">
             <parameter key="attribute_filter_type" value="subset"/>
@@ -87,16 +87,18 @@
           <portSpacing port="sink_out 2" spacing="0"/>
         </process>
       </operator>
-      <connect from_op="Read Train Data" from_port="result 1" to_op="Random Forest" to_port="input 1"/>
-      <connect from_op="Random Forest" from_port="result 1" to_op="Apply Model Test" to_port="model"/>
+      <connect from_op="Retrieve" from_port="output" to_op="Set Parameters" to_port="parameter set"/>
+      <connect from_op="Read Train Data" from_port="result 1" to_op="Random Forest" to_port="training set"/>
+      <connect from_op="Random Forest" from_port="model" to_op="Apply Model Test" to_port="model"/>
+      <connect from_op="Random Forest" from_port="weights" to_port="result 3"/>
       <connect from_op="Read Test Data" from_port="result 1" to_op="Apply Model Test" to_port="unlabelled data"/>
-      <connect from_op="Apply Model Test" from_port="labelled data" to_op="Save Submission" to_port="in 1"/>
+      <connect from_op="Apply Model Test" from_port="labelled data" to_port="result 1"/>
       <connect from_op="Apply Model Test" from_port="model" to_port="result 2"/>
-      <connect from_op="Save Submission" from_port="out 1" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
     </process>
   </operator>
 </process>
